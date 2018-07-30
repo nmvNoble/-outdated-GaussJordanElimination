@@ -11,25 +11,31 @@ package gaussjordanelimination;
  */
 public class Vector {
     int dimension;
+    double[] array;
+    
     Vector (int dimension){
         this.dimension = dimension;
-        double[] zeroVector = new double[dimension];
-        
     }
     
-    Vector (double[ ] array, int dimension){
+    Vector (double[] array, int dimension){
         this.dimension = dimension;
-        double[] normVector = new double[dimension];
-        for (int i = 0;i<dimension;i++)
-            normVector[i]=array[i];
+        this.array = array;
+//        double[] normVector = new double[array.length];
+//        for (int i = 0;i<array.length;i++)
+//            normVector[i]=array[i];
     }
     
-    Vector scale (int scalar){
-        return Vector(scalar);
+    Vector scale (double scalar){
+        Vector agik = new Vector( this.array, this.dimension);
+        for(int i=0; i<dimension;i++)
+            agik.array[i]*=scalar;
+        return agik;
     }
     
     Vector add (Vector addend){
-        
+        Vector ooof = new Vector( this.array, this.dimension);
+            ooof.array=addend.array;
+            return ooof;
     }
     
     Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants){
