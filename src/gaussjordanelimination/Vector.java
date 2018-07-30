@@ -14,11 +14,13 @@ public class Vector {
     double[] array;
     
     Vector (int dimension){
+        this.array = new double [dimension];
         this.dimension = dimension;
     }
     
     Vector (double[] array, int dimension){
         this.dimension = dimension;
+        this.array = new double [dimension];
         this.array = array;
 //        double[] normVector = new double[array.length];
 //        for (int i = 0;i<array.length;i++)
@@ -26,24 +28,28 @@ public class Vector {
     }
     
     Vector scale (double scalar){
-        Vector agik = new Vector( this.array, this.dimension);
         for(int i=0; i<dimension;i++)
-            agik.array[i]*=scalar;
-        return agik;
+            array[i]*=scalar;
+        return this;
     }
     
     Vector add (Vector addend){
-        Vector ooof = new Vector( this.array, this.dimension);
-            ooof.array=addend.array;
-            return ooof;
+        for(int i=0; i<dimension;i++)
+            array[i]+=addend.array[i];
+        return this;
     }
     
-    Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants){
+    void printer (){
+        for(int i=0; i<dimension; i++)
+            System.out.println(array[i]);
         
     }
-    
-    int span (List<Vector> vectors, int dimension){
-        
-    }
+//    Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants){
+//        
+//    }
+//    
+//    int span (List<Vector> vectors, int dimension){
+//        
+//    }
     
 }

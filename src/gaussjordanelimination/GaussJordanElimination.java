@@ -16,7 +16,11 @@ public class GaussJordanElimination {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Vector v = new Vector();
+        Vector v = new Vector(0);
+        Vector v1 = new Vector(new double[]{1, 2, 3}, 3);
+        Vector v2 = new Vector(new double[]{3, 2, 3}, 3);
+        v1.add(v2);
+        v1.printer();
     }
     
 }
