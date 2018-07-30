@@ -5,6 +5,8 @@
  */
 package gaussjordanelimination;
 
+import java.util.List;
+
 /**
  *
  * @author Neil Michael Noble
@@ -22,9 +24,6 @@ public class Vector {
         this.dimension = dimension;
         this.array = new double [dimension];
         this.array = array;
-//        double[] normVector = new double[array.length];
-//        for (int i = 0;i<array.length;i++)
-//            normVector[i]=array[i];
     }
     
     Vector scale (double scalar){
@@ -44,9 +43,17 @@ public class Vector {
             System.out.println(array[i]);
         
     }
-//    Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants){
-//        
-//    }
+    Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants){
+        for(int i=0; i<vectors.size(); i++){
+            for (int j = i+1; j < vectors.size()-i; j++) {
+                if (vectors.get(j).array[j]!=0) {
+                    for(int k=0; k<dimension; k++){
+                        double[] temp = vectors.get(i).array;
+                    }
+                }
+            }
+        }
+    }
 //    
 //    int span (List<Vector> vectors, int dimension){
 //        
