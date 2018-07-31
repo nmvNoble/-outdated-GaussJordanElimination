@@ -30,10 +30,10 @@ public class GaussJordanElimination {
         System.out.println("\n");
         
         List<Vector> vectors = new ArrayList<Vector>();
-        Vector v1 = new Vector(new double[]{1, 1, 1}, 3);
-        Vector v2 = new Vector(new double[]{2, 3, 5}, 3);
-        Vector v3 = new Vector(new double[]{4, 0, 5}, 3);
-        Vector vR = new Vector(new double[]{5, 8, 2}, 3);
+        Vector v1 = new Vector(new double[]{5, 3, -6}, 3);
+        Vector v2 = new Vector(new double[]{6, -4, 1}, 3);
+        Vector v3 = new Vector(new double[]{3, 8, -2}, 3);
+        Vector vR = new Vector(new double[]{23, 25, 19}, 3);
         v1.printer();
         v2.printer();
         v3.printer();
