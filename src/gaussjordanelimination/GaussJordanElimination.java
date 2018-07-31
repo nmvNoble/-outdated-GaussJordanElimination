@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Neil Michael Noble
+ * Klaudia Gaia Borromeo
+ * Neil Michael Noble
+ * Iris Libay
+ * ADVDISC X22
  */
 public class GaussJordanElimination {
 
