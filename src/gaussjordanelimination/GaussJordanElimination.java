@@ -34,14 +34,15 @@ public class GaussJordanElimination {
         Vector v2 = new Vector(new double[]{6, -4, 1}, 3);
         Vector v3 = new Vector(new double[]{3, 8, -2}, 3);
         Vector vR = new Vector(new double[]{23, 25, 19}, 3);
-        v1.printer();
+        /*v1.printer();
         v2.printer();
         v3.printer();
         vR.printer();
-        vectors.add(v1);
+        */vectors.add(v1);
         vectors.add(v2);
         vectors.add(v3);
-        v.Gauss_Jordan(vectors, 3, vR).printer();
+        v.printer(vectors, vR);
+        v.Gauss_Jordan(vectors, 3, vR);
     }
     
 }

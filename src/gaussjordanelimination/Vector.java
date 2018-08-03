@@ -5,7 +5,373 @@
  */
 package gaussjordanelimination;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+public class Vector {
+
+    private List<Double> arrayList;
+    private int dimension;
+
+    public Vector(int dimension)
+    {
+        this.dimension = dimension;
+    }
+
+    public Vector(double[] array, int dimension)
+    {
+        this.arrayList = Arrays.stream(array).boxed().collect(Collectors.toList());
+        this.dimension = dimension;
+    }
+
+    public Vector add(Vector addend)
+    {
+        double[] arr =  new double[arrayList.size()];
+
+        for (int i = 0; i < arrayList.size(); i++)
+        {
+            arr[i] = arrayList.get(i) + addend.getArrayList().get(i);
+        }
+
+        return new Vector(arr, dimension);
+    }
+
+    public Vector scale(double scalar)
+    {
+        double[] arr =  new double[arrayList.size()];
+
+        for (int i = 0; i < arrayList.size(); i++)
+        {
+            arr[i] = arrayList.get(i) * scalar;
+        }
+
+        return new Vector(arr, dimension);
+    }
+
+    public List<Double> getArrayList()
+    {
+        return this.arrayList;
+    }
+    
+    public static void printer(List<Vector> vectors, Vector constants){
+        
+        List<Double> constantsList = constants.getArrayList();
+        
+        for (int i = 0; i < vectors.size(); i++) 
+        {
+          List<Double> arrayValues = vectors.get(i).getArrayList();
+
+          for (int j = 0; j < arrayValues.size(); j++)
+          {
+            System.out.print(arrayValues.get(j) + " "); 
+          }
+
+          System.out.println();
+
+        }
+        
+    
+            for(int i = 0; i < constantsList.size(); i++)
+            {
+                System.out.println("C"+i+": "+constantsList.get(i));
+            }
+        
+        
+   
+   }
+   
+    public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
+        double[][] A = new double [vectors.size()][vectors.size()+1];
+        double[] cnst = new double[dimension];
+        
+        for(int i = 0; i < vectors.size(); i++)
+        {
+            for(int j = 0; j < vectors.get(i).getArrayList().size(); j++)
+            {
+                A[i][j] = vectors.get(i).getArrayList().get(j);
+            }
+        }
+        
+        
+        for(int c = 0; c < dimension; c++)
+        {
+            for(int r = 0; r < dimension; r++)
+            {
+                if(r != c)
+                {
+                    double x = A[r][c]/A[c][c];
+                    
+                    for(int k = 0; k < (vectors.size()+1); k++)
+                    {
+                        A[r][k] -= x*A[c][k];
+                        System.out.print("\nA["+r+"]["+k+"]: "+A[r][k]+" ");
+                    }
+                    System.out.println();
+                }
+            }
+        }
+        
+        for(int r = 0; r < dimension; r++)
+        {
+            cnst[r] = A[r][dimension]/A[r][r];
+            
+        }
+        
+        constants = new Vector(cnst, dimension);
+        
+        return constants;
+    }
+    
+    
+}
+
+
+
+
+/*
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Vector {
+
+    private List<Double> arrayList;
+    private int dimension;
+
+    public Vector(int dimension)
+    {
+        this.dimension = dimension;
+    }
+
+    public Vector(double[] array, int dimension)
+    {
+        this.arrayList = Arrays.stream(array).boxed().collect(Collectors.toList());
+        this.dimension = dimension;
+    }
+
+    public Vector add(Vector addend)
+    {
+        double[] arr =  new double[arrayList.size()];
+
+        for (int i = 0; i < arrayList.size(); i++)
+        {
+            arr[i] = arrayList.get(i) + addend.getArrayList().get(i);
+        }
+
+        return new Vector(arr, dimension);
+    }
+
+    public Vector scale(double scalar)
+    {
+        double[] arr =  new double[arrayList.size()];
+
+        for (int i = 0; i < arrayList.size(); i++)
+        {
+            arr[i] = arrayList.get(i) * scalar;
+        }
+
+        return new Vector(arr, dimension);
+    }
+
+    public List<Double> getArrayList()
+    {
+        return this.arrayList;
+    }
+    
+    public static void printer(List<Vector> vectors, Vector constants){
+        
+        List<Double> constantsList = constants.getArrayList();
+        
+        for (int i = 0; i < vectors.size(); i++) 
+        {
+          List<Double> arrayValues = vectors.get(i).getArrayList();
+
+          for (int j = 0; j < arrayValues.size(); j++)
+          {
+            System.out.print(arrayValues.get(j) + " "); 
+          }
+
+          System.out.println();
+
+        }
+        
+    
+            for(int i = 0; i < constantsList.size(); i++)
+            {
+                System.out.println("C"+i+": "+constantsList.get(i));
+            }
+        
+        
+   
+   }
+   
+    public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
+        double[][] A = new double [vectors.size()][vectors.size()+1];
+        double[] cnst = new double[dimension];
+        
+        for(int i = 0; i < vectors.size(); i++)
+        {
+            for(int j = 0; j < vectors.get(i).getArrayList().size(); j++)
+            {
+                A[i][j] = vectors.get(i).getArrayList().get(j);
+            }
+        }
+        
+        
+        for(int c = 0; c < dimension; c++)
+        {
+            for(int r = 0; r < dimension; r++)
+            {
+                if(r != c)
+                {
+                    double x = A[r][c]/A[c][c];
+                    
+                    for(int k = 0; k < (vectors.size()+1); k++)
+                    {
+                        A[r][k] -= x*A[c][k];
+                        
+                        System.out.print("\nA["+r+"]["+k+"]: "+A[r][k]+" ");
+                    }
+                    System.out.println();
+                }
+            }
+        }
+        
+        for(int r = 0; r < dimension; r++)
+        {
+            cnst[r] = A[r][dimension]/A[r][r];
+            System.out.println(cnst[r]+" ");
+            
+        }
+        
+        constants = new Vector(cnst, dimension);
+        
+        return constants;
+    }
+    
+    
+}*/
+
+
+/*import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Vector {
+
+    private List<Double> arrayList;
+    private int dimension;
+
+    public Vector(int dimension)
+    {
+        this.dimension = dimension;
+    }
+
+    public Vector(double[] array, int dimension)
+    {
+        this.arrayList = Arrays.stream(array).boxed().collect(Collectors.toList());
+        this.dimension = dimension;
+    }
+
+    public Vector add(Vector addend)
+    {
+        double[] arr =  new double[arrayList.size()];
+
+        for (int i = 0; i < arrayList.size(); i++)
+        {
+            arr[i] = arrayList.get(i) + addend.getArrayList().get(i);
+        }
+
+        return new Vector(arr, dimension);
+    }
+
+    public Vector scale(double scalar)
+    {
+        double[] arr =  new double[arrayList.size()];
+
+        for (int i = 0; i < arrayList.size(); i++)
+        {
+            arr[i] = arrayList.get(i) * scalar;
+        }
+
+        return new Vector(arr, dimension);
+    }
+
+    public List<Double> getArrayList()
+    {
+        return this.arrayList;
+    }
+    
+    public static void printer(List<Vector> vectors){
+        for (int i = 0; i < vectors.size(); i++) 
+        {
+          List<Double> arrayValues = vectors.get(i).getArrayList();
+
+          for (int j = 0; j < arrayValues.size(); j++)
+          {
+            System.out.print(arrayValues.get(j) + " "); 
+          }
+
+          System.out.println();
+
+        }
+
+       
+   }
+   
+    public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
+        double[][] A = new double [vectors.size()][vectors.size()+1];
+        double[] cnst = new double[dimension];
+        constants = new Vector(cnst, dimension);
+        
+        System.out.println("\nvectors.size: "+ vectors.size());
+        
+        for(int c = 0; c < vectors.size(); c++){
+            for(int r = 0; r < vectors.size(); r++){
+                A[r][c] = vectors.get(r).arrayList.get(c);
+            }
+        }
+        
+        for (int z = 0; z < vectors.size()-1; z++) 
+            A[z][vectors.size()] = constants.arrayList.get(z);
+        
+        for(int c = 0; c < dimension; c++)
+        {
+            for(int r = 0; r < dimension; r++)
+            {
+                if(r != c)
+                {
+                    double x = A[r][c]/A[c][c];
+                    
+                    for(int k = 0; k < (vectors.size()+1); k++)
+                    {
+                        A[r][k] -= x*A[c][k];
+                        
+                        System.out.print("\nA["+r+"]["+k+"]: "+A[r][k]+" ");
+                    }
+                    System.out.println();
+                }
+            }
+        }
+        
+        for(int r = 0; r < dimension; r++)
+        {
+            cnst[r] = A[r][dimension]/A[r][r];
+            
+        }
+        
+        return constants;
+    }
+    
+  
+    
+}*/
+
+
+//import java.util.List;
 
 /**
  *
@@ -14,7 +380,7 @@ import java.util.List;
  * Iris Libay
  * 
  * ADVDISC X22
- */
+ *//*
 public class Vector {
     int dimension;
     double[] array;
@@ -50,6 +416,50 @@ public class Vector {
     }
     Vector Gauss_Jordan (List<Vector> vectors, int dimension, Vector constants){
         System.out.println();
+        
+        int i, j, k, n;
+        int z, y;
+        double c;
+        double[] x = new double[dimension];
+        double[][] A = new double[dimension+1][dimension+1];
+        n=dimension;
+        for (i = 1; i <= n; i++) {
+            for (j = 1; j <= (n + 1); j++) {
+                if(j == (n + 1)){
+                    A[i][j] = constants.array[i];
+                }
+                else{
+                    System.out.println("i: "+(i-1)+", j: "+(j-1)+", ans: "+vectors.get(j-1).array[i-1]);
+                    A[i][j] = vectors.get(j-1).array[i-1];
+                }
+            }
+        }
+
+        for (i = 1; i <= n; i++) {
+            for (j = 1; j <= (n + 1); j++) {
+                System.out.printf(" %.2f", A[i][j]);
+            }
+            System.out.print("\n");
+        }
+        //gettin da diagonal elements? values???????? 
+        for (j = 1; j <= n; j++) {
+            for (i = 1; i <= n; i++) {
+                if (i != j) {
+                    c = A[i][j] / A[j][j];
+                    for (k = 1; k <= n + 1; k++) {
+                        A[i][k] = A[i][k] - c * A[j][k];
+                    }
+                }
+            }
+
+        }
+        System.out.printf("\nsolution:\n");
+        for (i = 1; i <= n; i++) {
+            x[i] = A[i][n + 1] / A[i][i];
+            System.out.printf("\n c%d=%f\n", i, x[i]);
+        }
+        
+        /*
         List<Vector> fVectors = vectors;
                                     //System.out.println("G_J:");;
                                     //System.out.println("G_J:");
@@ -105,8 +515,8 @@ public class Vector {
                     }
                 }
             }
-        }
-        Vector finalV = new Vector(constants.array, dimension);
+        }*/
+        /*Vector finalV = new Vector(constants.array, dimension);
         System.out.println("ret");
         return finalV;
     }
@@ -116,3 +526,4 @@ public class Vector {
 //    }
     
 }
+*/
