@@ -59,13 +59,14 @@ public class Vector {
         
         List<Double> constantsList = constants.getArrayList();
         
+                        System.out.println("\nMatrix: ");
         for (int i = 0; i < vectors.size(); i++) 
         {
           List<Double> arrayValues = vectors.get(i).getArrayList();
 
           for (int j = 0; j < arrayValues.size(); j++)
           {
-            System.out.print(arrayValues.get(j) + " "); 
+            System.out.print("("+i+", "+j+")"+arrayValues.get(j) + " "); 
           }
 
           System.out.println();
@@ -73,6 +74,7 @@ public class Vector {
         }
         
     
+                        System.out.println("Constants: ");
             for(int i = 0; i < constantsList.size(); i++)
             {
                 System.out.println("C"+i+": "+constantsList.get(i));
@@ -86,14 +88,19 @@ public class Vector {
         double[][] A = new double [vectors.size()][vectors.size()+1];
         double[] cnst = new double[dimension];
         
+                        System.out.println("\nInitial");
         for(int i = 0; i < vectors.size(); i++)
         {
             for(int j = 0; j < vectors.get(i).getArrayList().size(); j++)
             {
                 A[i][j] = vectors.get(i).getArrayList().get(j);
+                        System.out.print("("+i+", "+j+")"+A[i][j]+" ");
             }
+            System.out.println();
         }
         
+        for (int z = 0; z < vectors.size()-1; z++) 
+            A[z][vectors.size()] = constants.arrayList.get(z);
         
         for(int c = 0; c < dimension; c++)
         {
@@ -106,17 +113,15 @@ public class Vector {
                     for(int k = 0; k < (vectors.size()+1); k++)
                     {
                         A[r][k] -= x*A[c][k];
-                        System.out.print("\nA["+r+"]["+k+"]: "+A[r][k]+" ");
+                        System.out.print("("+r+", "+k+")"+A[r][k]+" ");
                     }
                     System.out.println();
                 }
             }
         }
         
-        for(int r = 0; r < dimension; r++)
-        {
+        for(int r = 0; r < dimension; r++){
             cnst[r] = A[r][dimension]/A[r][r];
-            
         }
         
         constants = new Vector(cnst, dimension);

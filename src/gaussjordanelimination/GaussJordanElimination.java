@@ -42,7 +42,9 @@ public class GaussJordanElimination {
         vectors.add(v2);
         vectors.add(v3);
         v.printer(vectors, vR);
-        v.Gauss_Jordan(vectors, 3, vR);
+        //v.Gauss_Jordan(vectors, 3, vR);
+        
+        v.printer(vectors, v.Gauss_Jordan(vectors, 3, vR));
     }
     
 }
