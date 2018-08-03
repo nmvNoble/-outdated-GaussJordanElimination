@@ -72,16 +72,20 @@ public class Vector {
           System.out.println();
 
         }
-        
-    
                         System.out.println("Constants: ");
             for(int i = 0; i < constantsList.size(); i++)
             {
                 System.out.println("C"+i+": "+constantsList.get(i));
             }
+   }
+    
+    public static void printVector(Vector constants){
         
-        
-   
+        System.out.println("Constants: ");
+            for(int i = 0; i < constants.dimension; i++)
+            {
+                System.out.println("C"+i+": "+constants.arrayList.get(i));
+            }
    }
    
     public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
@@ -91,13 +95,14 @@ public class Vector {
                         System.out.println("\nInitial");
         for(int i = 0; i < vectors.size(); i++)
         {
-            for(int j = 0; j < vectors.get(i).getArrayList().size(); j++)
+            for(int j = 0; j < dimension; j++)
             {
-                A[i][j] = vectors.get(i).getArrayList().get(j);
-                        System.out.print("("+i+", "+j+")"+A[i][j]+" ");
+                A[j][i] = vectors.get(i).getArrayList().get(j);
+                        System.out.print("("+j+", "+i+")"+A[j][i]+" ");
             }
-            System.out.println();
+            System.out.println("");
         }
+            System.out.println("start");
         
         for (int z = 0; z < vectors.size()-1; z++) 
             A[z][vectors.size()] = constants.arrayList.get(z);
@@ -105,19 +110,20 @@ public class Vector {
         for(int c = 0; c < dimension; c++)
         {
             for(int r = 0; r < dimension; r++)
-            {
+            {System.out.print("("+r+", "+c+")"+A[r][c]+" ");
                 if(r != c)
-                {
+                {System.out.print("Non Diag GJ: ");
                     double x = A[r][c]/A[c][c];
                     
                     for(int k = 0; k < (vectors.size()+1); k++)
                     {
                         A[r][k] -= x*A[c][k];
-                        System.out.print("("+r+", "+k+")"+A[r][k]+" ");
+                        //if(k==vectors.size()){
+                            System.out.print("agik("+r+", "+k+")"+A[r][k]+" ");
+                        //}
                     }
-                    System.out.println();
-                }
-            }
+                }System.out.println();
+            }System.out.println();
         }
         
         for(int r = 0; r < dimension; r++){
