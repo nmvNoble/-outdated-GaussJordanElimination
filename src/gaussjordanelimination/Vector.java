@@ -118,7 +118,7 @@ public class Vector {
         {
             for(int i = 0; i < dimension; i++)
             {
-                if(i != j)
+                if(i != j && A[j][j]!=0)
                 {
                     double c = A[i][j]/A[j][j];
                     for(int k = 0; k < dimension; k++)
@@ -130,11 +130,12 @@ public class Vector {
             //System.out.println();
         }
         for(int i = 0; i < (dimension-1); i++)
+            if(A[i][i]!=0)
             cnst[i] = A[i][dimension - 1]/A[i][i];
         constants = new Vector(cnst, dimension);
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
-                if(i == j)
+                if(i == j && A[i][j]!=0)
                     A[i][j] /= A[i][j];
         System.out.println("\nPost-GJE: ");
         printMatrix(A, dimension);
@@ -155,7 +156,7 @@ public class Vector {
         {
             for(int i = 0; i < dimension; i++)
             {
-                if(i != j)
+                if(i != j && A[j][j]!=0)
                 {
                     double c = A[i][j]/A[j][j];
                     for(int k = 0; k < dimension; k++)
@@ -165,7 +166,7 @@ public class Vector {
         }
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
-                if(i == j)
+                if(i == j && A[i][j]!=0)
                     A[i][j] /= A[i][j];
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
