@@ -131,7 +131,10 @@ public class Vector {
         }
         for(int i = 0; i < (dimension-1); i++)
             if(A[i][i]!=0)
-            cnst[i] = A[i][dimension - 1]/A[i][i];
+                cnst[i] = A[i][dimension - 1]/A[i][i];
+            else if(A[i][i]==0)
+                cnst[i] = A[i][i]/A[i][i]; //to represent that solution is wrong and make output NaN
+        
         constants = new Vector(cnst, dimension);
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
@@ -139,6 +142,7 @@ public class Vector {
                     A[i][j] /= A[i][j];
         System.out.println("\nPost-GJE: ");
         printMatrix(A, dimension);
+        
         return constants;
     }
     
@@ -170,7 +174,7 @@ public class Vector {
                     A[i][j] /= A[i][j];
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
-                if(i == j)
+                
                     if(A[i][j] == 1)
                         span++;
         return span;
