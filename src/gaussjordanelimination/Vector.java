@@ -87,8 +87,10 @@ public class Vector {
     {
     	   for(int z = 0; z < dimension - 1; z++)
            {
-               for(int y = 0; y < dimension; y++)
+               for(int y = 0; y < dimension; y++){
+                   //System.out.print("("+z+", "+y+") ");
                    System.out.printf("%.2f ", A[z][y]);
+               }
                System.out.println();
            }
     }
@@ -123,6 +125,21 @@ public class Vector {
             }
             //System.out.println();
         }
+        //printMatrix(A, dimension);
+        double[] swap = new double[dimension];
+        for(int j = 0; j < dimension-1; j++)
+            for(int i = j+1; i < dimension-1; i++){
+                //System.out.println("("+j+", "+j+") "+A[j][j]+"==0 && ("+j+", "+i+")"+A[j][i]+"==1");
+                if(A[j][j]==0&&A[i][j]==1){
+                    System.out.println("swap");
+                    for (int s = 0; s < dimension; s++){
+                        swap[s]=A[j][s];
+                        A[j][s]=A[i][s];
+                        A[i][s]=swap[s];
+                    }
+                }
+            }
+        
         for(int i = 0; i < (dimension-1); i++)
             if(A[i][i]!=0)
                 cnst[i] = A[i][dimension - 1]/A[i][i];
@@ -135,6 +152,10 @@ public class Vector {
             for(int i = 0; i < dimension; i++)
                 if(i == j && A[i][j]!=0)
                     A[i][j] /= A[i][j];
+        
+        
+                        
+                            
         System.out.println("\nPost-GJE: ");
         printMatrix(A, dimension);
         return constants;
