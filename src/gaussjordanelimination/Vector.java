@@ -97,7 +97,7 @@ public class Vector {
     
     public static void printSpan(int span)
     {
-    	System.out.println("\n\nSpan: "+ span);
+    	System.out.println("\nSpan: "+ span);
     }
 
     public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
@@ -128,34 +128,32 @@ public class Vector {
         //printMatrix(A, dimension);
         double[] swap = new double[dimension];
         for(int j = 0; j < dimension-1; j++)
-            for(int i = j+1; i < dimension-1; i++){
-                //System.out.println("("+j+", "+j+") "+A[j][j]+"==0 && ("+j+", "+i+")"+A[j][i]+"==1");
-                if(A[j][j]==0&&A[i][j]==1){
-                    System.out.println("swap");
+            for(int i = j+1; i < dimension-1; i++)
+                if(A[j][j]==0&&A[i][j]==1)
                     for (int s = 0; s < dimension; s++){
                         swap[s]=A[j][s];
                         A[j][s]=A[i][s];
                         A[i][s]=swap[s];
                     }
-                }
-            }
         
-        for(int i = 0; i < (dimension-1); i++)
+        //System.out.println("Swapped:  ");        
+        //printMatrix(A, dimension);
+        for(int i = 0; i < (dimension-1); i++){
+                //System.out.println("("+i+", "+i+") "+A[i][i]+" cnst: "+cnst[i]);
             if(A[i][i]!=0)
                 cnst[i] = A[i][dimension - 1]/A[i][i];
-            else if(A[i][i]==0 &&cnst[i]!=0){
+            else if(A[i][i]==0 &&A[i][dimension-1]!=0){
                 cnst[i] = A[i][i]/A[i][i]; //to represent that solution is wrong and make output NaN
                 System.out.println("Solution NULL");
             }
+        }
+        
         constants = new Vector(cnst, dimension);
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
                 if(i == j && A[i][j]!=0)
                     A[i][j] /= A[i][j];
         
-        
-                        
-                            
         System.out.println("\nPost-GJE: ");
         printMatrix(A, dimension);
         return constants;
