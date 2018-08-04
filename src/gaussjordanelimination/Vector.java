@@ -32,24 +32,16 @@ public class Vector {
     public Vector add(Vector addend)
     {
         double[] arr =  new double[arrayList.size()];
-
         for (int i = 0; i < arrayList.size(); i++)
-        {
             arr[i] = arrayList.get(i) + addend.getArrayList().get(i);
-        }
-
         return new Vector(arr, dimension);
     }
 
     public Vector scale(double scalar)
     {
         double[] arr =  new double[arrayList.size()];
-
         for (int i = 0; i < arrayList.size(); i++)
-        {
             arr[i] = arrayList.get(i) * scalar;
-        }
-
         return new Vector(arr, dimension);
     }
 
@@ -85,14 +77,14 @@ public class Vector {
     
     public static void printMatrix(double[][] A, int dimension)
     {
-    	   for(int z = 0; z < dimension - 1; z++)
-           {
-               for(int y = 0; y < dimension; y++){
-                   //System.out.print("("+z+", "+y+") ");
-                   System.out.printf("%.2f ", A[z][y]);
-               }
-               System.out.println();
-           }
+        for(int z = 0; z < dimension - 1; z++)
+        {
+            for(int y = 0; y < dimension; y++){
+                //System.out.print("("+z+", "+y+") ");
+                System.out.printf("%.2f ", A[z][y]);
+            }
+            System.out.println();
+        }
     }
     
     public static void printSpan(int span)
@@ -103,30 +95,22 @@ public class Vector {
     public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
         double[][] A = new double [dimension][dimension];
         double[] cnst = new double[dimension - 1];
+        double[] swap = new double[dimension];
         
         System.out.println("Initial: ");
         A = ListTo2DArray(vectors,dimension,constants);
         printMatrix(A,A.length);
         System.out.println();
      
-
         for(int j = 0; j < dimension - 1; j++)
-        {
             for(int i = 0; i < dimension; i++)
-            {
                 if(i != j && A[j][j]!=0)
                 {
                     double c = A[i][j]/A[j][j];
                     for(int k = 0; k < dimension; k++)
                         A[i][k] = A[i][k] - c*A[j][k];
                 }
-                //printMatrix(A, dimension);
-                //System.out.println();
-            }
-            //System.out.println();
-        }
-        //printMatrix(A, dimension);
-        double[] swap = new double[dimension];
+        
         for(int j = 0; j < dimension-1; j++)
             for(int i = j+1; i < dimension-1; i++)
                 if(A[j][j]==0&&A[i][j]==1)
@@ -136,15 +120,12 @@ public class Vector {
                         A[i][s]=swap[s];
                     }
         
-        //System.out.println("Swapped:  ");        
-        //printMatrix(A, dimension);
         for(int i = 0; i < (dimension-1); i++){
-                //System.out.println("("+i+", "+i+") "+A[i][i]+" cnst: "+cnst[i]);
             if(A[i][i]!=0)
                 cnst[i] = A[i][dimension - 1]/A[i][i];
             else if(A[i][i]==0 &&A[i][dimension-1]!=0){
                 cnst[i] = A[i][i]/A[i][i]; //to represent that solution is wrong and make output NaN
-                System.out.println("Solution NULL");
+                System.out.println("Solution NULL\n");
             }
         }
         
@@ -154,41 +135,40 @@ public class Vector {
                 if(i == j && A[i][j]!=0)
                     A[i][j] /= A[i][j];
         
-        System.out.println("\nPost-GJE: ");
+        System.out.println("Post-GJE: ");
         printMatrix(A, dimension);
         return constants;
     }
     
-    
-
     public static int span(List<Vector> vectors, int dimension)
     {
         double[][] A = new double [dimension][dimension];
+        int span = 0;
+        
   	for(int i = 0; i < dimension - 1; i++)
             for(int j = 0; j < dimension; j++)
             	if (j < dimension - 1) 
                     A[i][j] = vectors.get(j).getArrayList().get(i);
-        int span = 0;
+        
         for(int j = 0; j < dimension - 1; j++)
-        {
             for(int i = 0; i < dimension; i++)
-            {
                 if(i != j && A[j][j]!=0)
                 {
                     double c = A[i][j]/A[j][j];
                     for(int k = 0; k < dimension; k++)
                         A[i][k] = A[i][k] - c*A[j][k];
                 }
-            }
-        }
+        
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
                 if(i == j && A[i][j]!=0)
                     A[i][j] /= A[i][j];
+        
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
                 if(A[i][j] == 1)
                     span++;
+        
         return span;
     }
 }
