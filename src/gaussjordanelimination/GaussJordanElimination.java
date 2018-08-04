@@ -44,7 +44,7 @@ public class GaussJordanElimination {
 
         constants = v.Gauss_Jordan(vectors, dimension, constants);
         v.printConstants(constants);
-        //v.matrixPrinter(vectors, dimension, constants);
+        //v.ListTo2DArray(vectors, dimension, constants);
         
         span = v.span(vectors, dimension);
         v.printSpan(span);

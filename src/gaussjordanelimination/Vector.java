@@ -65,21 +65,14 @@ public class Vector {
                 '}';
     }
 
-    public static double[][] matrixPrinter(List<Vector> vectors, int dimension, Vector constants){
+    public static double[][] ListTo2DArray(List<Vector> vectors, int dimension, Vector constants){
         double[][] A = new double [dimension][dimension];
         for(int i = 0; i < dimension - 1; i++)
-        {
             for(int j = 0; j < dimension; j++)
-            {
-                if (j < dimension - 1) {
+                if (j < dimension - 1) 
                     A[i][j] = vectors.get(j).getArrayList().get(i);
-                } else {
+                else 
                     A[i][j] = constants.getArrayList().get(i);
-                }
-                System.out.print(A[i][j] + " ");
-            }
-            System.out.println();
-        }
         return A;
     }
 
@@ -110,7 +103,8 @@ public class Vector {
         double[] cnst = new double[dimension - 1];
         
         System.out.println("Initial: ");
-        A = matrixPrinter(vectors,dimension,constants);
+        A = ListTo2DArray(vectors,dimension,constants);
+        printMatrix(A,A.length);
         System.out.println();
      
 
@@ -143,7 +137,6 @@ public class Vector {
                     A[i][j] /= A[i][j];
         System.out.println("\nPost-GJE: ");
         printMatrix(A, dimension);
-        
         return constants;
     }
     
@@ -175,9 +168,8 @@ public class Vector {
                     A[i][j] /= A[i][j];
         for(int j = 0; j < dimension -1; j++)
             for(int i = 0; i < dimension; i++)
-                
-                    if(A[i][j] == 1)
-                        span++;
+                if(A[i][j] == 1)
+                    span++;
         return span;
     }
 }
