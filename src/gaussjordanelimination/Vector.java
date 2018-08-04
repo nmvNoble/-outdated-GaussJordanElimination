@@ -132,7 +132,7 @@ public class Vector {
         for(int i = 0; i < (dimension-1); i++)
             if(A[i][i]!=0)
                 cnst[i] = A[i][dimension - 1]/A[i][i];
-            else if(A[i][i]==0){
+            else if(A[i][i]==0 &&cnst[i]!=0){
                 cnst[i] = A[i][i]/A[i][i]; //to represent that solution is wrong and make output NaN
                 System.out.println("Solution NULL");
             }
