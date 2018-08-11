@@ -1,5 +1,6 @@
 package gaussjordanelimination;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,91 +53,60 @@ public class Vector {
 
     @Override
     public String toString() {
-        return "Vector{" +
-                "arrayList=" + arrayList +
-                '}';
+        return "Vector{" + "arrayList=" + arrayList + '}';
     }
 
-    public static double[][] ListTo2DArray(List<Vector> vectors, int dimension, Vector constants){
-        double[][] A = new double [dimension][dimension];
-        for(int i = 0; i < dimension - 1; i++)
-            for(int j = 0; j < dimension; j++)
-                if (j < dimension - 1) 
-                    A[i][j] = vectors.get(j).getArrayList().get(i);
-                else 
-                    A[i][j] = constants.getArrayList().get(i);
-        return A;
-    }
-
-    public static void printConstants(Vector constants) {
-        List<Double> constantsList = constants.getArrayList();
-        System.out.println("\nConstants: ");
-        for (int i = 0; i < constantsList.size(); i++)
-            System.out.println("C[" + i + "]: " + constantsList.get(i));
-    }
-    
-    public static void printMatrix(double[][] A, int dimension)
-    {
-        for(int z = 0; z < dimension - 1; z++)
-        {
-            for(int y = 0; y < dimension; y++){
-                //System.out.print("("+z+", "+y+") ");
-                System.out.printf("%.2f ", A[z][y]);
-            }
-            System.out.println();
-        }
-    }
-    
-    public static void printSpan(int span)
-    {
-    	System.out.println("\nSpan: "+ span);
-    }
-
-    public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
-        double[][] A = new double [dimension][dimension];
-        double[] cnst = new double[dimension - 1];
-        double[] swap = new double[dimension];
-        
-        System.out.println("Initial: ");
-        A = ListTo2DArray(vectors,dimension,constants);
-        printMatrix(A,A.length);
+    public static void printVector(Vector V) {
+        List<Double> vectorList = V.getArrayList();
+        System.out.println("\nVector: ");
+        for (int i = 0; i < vectorList.size()-1; i++)
+            System.out.print("vL[" + i + "]: " + vectorList.get(i)+" ");
         System.out.println();
-     
-        for(int j = 0; j < dimension - 1; j++)
-            for(int i = 0; i < dimension; i++)
-                if(i != j && A[j][j]!=0)
-                {
-                    double c = A[i][j]/A[j][j];
-                    for(int k = 0; k < dimension; k++)
-                        A[i][k] = A[i][k] - c*A[j][k];
-                }
-        
-        for(int j = 0; j < dimension-1; j++)
-            for(int i = j+1; i < dimension-1; i++)
-                if(A[j][j]==0&&A[i][j]==1)
-                    for (int s = 0; s < dimension; s++){
-                        swap[s]=A[j][s];
-                        A[j][s]=A[i][s];
-                        A[i][s]=swap[s];
-                    }
-        
-        for(int i = 0; i < (dimension-1); i++){
-            if(A[i][i]!=0)
-                cnst[i] = A[i][dimension - 1]/A[i][i];
-            else if(A[i][i]==0 &&A[i][dimension-1]!=0){
-                cnst[i] = A[i][i]/A[i][i]; //to represent that solution is wrong and make output NaN
-                System.out.println("Solution NULL\n");
-            }
+    }
+    
+    public static List<Vector> transposeList(List<Vector> vectors, int dimension){
+        double[] tmp = new double[dimension+1];
+        List<Vector> transpose = new ArrayList<>();
+        Vector e = new Vector(tmp, dimension);
+        for (int t=0; t<tmp.length; t++){
+            transpose.add(e);
         }
+        for(int i=0;i<dimension;i++){
+            for (int j = 0; j < dimension; j++) {
+                System.out.print("\nplacing value in transpose " +i + ")");
+                transpose.get(i).arrayList.set(j, vectors.get(j).arrayList.get(i));
+            }
+            System.out.print("\nResult of transpose.get{"+i+")");
+            printVector(transpose.get(i));
+        }
+            System.out.print("\nFinal transpose.get{"+0+")");
+        printVector(transpose.get(0));
+            System.out.print("\nFinal transpose.get{"+1+")");
+        printVector(transpose.get(1));
+            System.out.print("\nFinal transpose.get{"+2+")");
+        printVector(transpose.get(2));
+        return transpose;
+    }
+    
+    public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
         
-        constants = new Vector(cnst, dimension);
-        for(int j = 0; j < dimension -1; j++)
-            for(int i = 0; i < dimension; i++)
-                if(i == j && A[i][j]!=0)
-                    A[i][j] /= A[i][j];
+        List<Vector> GJ = new ArrayList<Vector>();
+        GJ = transposeList(vectors, dimension);
+        System.out.println("dfq");
+        printVector(GJ.get(0));
+        printVector(GJ.get(1));
+        printVector(GJ.get(2));
         
-        System.out.println("Post-GJE: ");
-        printMatrix(A, dimension);
+        for(int i=0;i<dimension;i++){
+            for (int j = 0; j < dimension; j++) {
+                if(GJ.get(i).arrayList.get(j)!=0){
+                    GJ.get(i).scale(1/GJ.get(i).arrayList.get(j));
+                    //printVector(GJ.get(i));
+                    //System.out.print(GJ.get(i).arrayList.get(j));
+                }
+            }
+            //System.out.println();
+        }
         return constants;
     }
     
@@ -145,30 +115,7 @@ public class Vector {
         double[][] A = new double [dimension][dimension];
         int span = 0;
         
-  	for(int i = 0; i < dimension - 1; i++)
-            for(int j = 0; j < dimension; j++)
-            	if (j < dimension - 1) 
-                    A[i][j] = vectors.get(j).getArrayList().get(i);
-        
-        for(int j = 0; j < dimension - 1; j++)
-            for(int i = 0; i < dimension; i++)
-                if(i != j && A[j][j]!=0)
-                {
-                    double c = A[i][j]/A[j][j];
-                    for(int k = 0; k < dimension; k++)
-                        A[i][k] = A[i][k] - c*A[j][k];
-                }
-        
-        for(int j = 0; j < dimension -1; j++)
-            for(int i = 0; i < dimension; i++)
-                if(i == j && A[i][j]!=0)
-                    A[i][j] /= A[i][j];
-        
-        for(int j = 0; j < dimension -1; j++)
-            for(int i = 0; i < dimension; i++)
-                if(A[i][j] == 1)
-                    span++;
-        
+  	
         return span;
     }
 }
