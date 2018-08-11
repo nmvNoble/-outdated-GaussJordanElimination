@@ -2,9 +2,10 @@ package gaussjordanelimination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.util.*;
 /*
  *
  * Klaudia Gaia Borromeo
@@ -65,27 +66,52 @@ public class Vector {
     }
     
     public static List<Vector> transposeList(List<Vector> vectors, int dimension){
-        double[] tmp = new double[dimension+1];
-        List<Vector> transpose = new ArrayList<>();
-        Vector e = new Vector(tmp, dimension);
-        for (int t=0; t<tmp.length; t++){
-            transpose.add(e);
-        }
-        for(int i=0;i<dimension;i++){
-            for (int j = 0; j < dimension; j++) {
-                System.out.print("\nplacing value in transpose " +i + ")");
-                transpose.get(i).arrayList.set(j, vectors.get(j).arrayList.get(i));
+     
+       double[][] array = new double[dimension][dimension];
+       List<Vector> transpose = new ArrayList<Vector>();
+       
+       for(int i = 0; i < dimension; i++)
+        {
+            for(int j = 0; j < dimension; j++)
+            {
+                array[i][j] = vectors.get(i).getArrayList().get(j);
+                System.out.println("\n"+ array[i][j]);
             }
-            System.out.print("\nResult of transpose.get{"+i+")");
-            printVector(transpose.get(i));
+            System.out.println();
         }
-            System.out.print("\nFinal transpose.get{"+0+")");
-        printVector(transpose.get(0));
-            System.out.print("\nFinal transpose.get{"+1+")");
-        printVector(transpose.get(1));
-            System.out.print("\nFinal transpose.get{"+2+")");
-        printVector(transpose.get(2));
+       
+        
+        for(int i = 0; i < dimension; i++)
+        {    
+            for (int j=i+1; j<dimension; j++) { 
+                double temp = array[i][j];
+                array[i][j] = array [j][i];
+                array[j][i] = temp;
+            }
+        }
+        
+        
+        
+
+//        for (int t=0; t<tmp.length; t++){
+//            transpose.add(e);
+//        }
+//        for(int i=0;i<dimension;i++){
+//            for (int j = 0; j < dimension; j++) {
+//                System.out.print("\nplacing value in transpose " +i + ")");
+//                transpose.get(i).arrayList.set(j, vectors.get(j).arrayList.get(i));
+//            }
+//            System.out.print("\nResult of transpose.get{"+i+")");
+//            printVector(transpose.get(i));
+//        }
+//            System.out.print("\nFinal transpose.get{"+0+")");
+//        printVector(transpose.get(0));
+//            System.out.print("\nFinal transpose.get{"+1+")");
+//        printVector(transpose.get(1));
+//            System.out.print("\nFinal transpose.get{"+2+")");
+//        printVector(transpose.get(2));
         return transpose;
+       
     }
     
     public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
