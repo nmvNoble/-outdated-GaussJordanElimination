@@ -22,11 +22,14 @@ public class GaussJordanElimination {
     public static void main(String[] args) {
         // TODO code application logic here
         Vector v = new Vector(0);
-        Vector v1 = new Vector(new double[]{1, 2, 4}, 3);
+        Vector v1 = new Vector(new double[]{1, 1, 1}, 3);
+        Vector v2 = new Vector(new double[]{2, 3, 7}, 3);
+        Vector v3 = new Vector(new double[]{1, 3, -2}, 3);
+        /*Vector v1 = new Vector(new double[]{1, 2, 4}, 3);
         Vector v2 = new Vector(new double[]{2, 3, 5}, 3);
-        Vector v3 = new Vector(new double[]{4, 0, 5}, 3);
+        Vector v3 = new Vector(new double[]{4, 0, 5}, 3);*/
 //        Vector v4 = new Vector(new double[]{0, 1, 0}, 3);
-        Vector constants = new Vector(new double[]{5, 8, 2}, 3);
+        Vector constants = new Vector(new double[]{3, 0, 17}, 3);
         
         /*Vector v2 = new Vector(new double[]{1, -2}, 2);
         Vector v3 = new Vector(new double[]{5, -7}, 2);
@@ -43,6 +46,7 @@ public class GaussJordanElimination {
         int span = 0;
 
         constants = v.Gauss_Jordan(vectors, dimension, constants);
+        System.out.print("\n\nConstants: ");
         v.printVector(constants);
         //v.ListTo2DArray(vectors, dimension, constants);
         
