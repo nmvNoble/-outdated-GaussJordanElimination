@@ -72,6 +72,8 @@ public class Matrix {
         }
 
     }
+    
+    
 	
 	//inverse function doesnt work properly yet due to the return value "x" not being a Vector still trying to fix and still needs GJ
 //	public Matrix inverse()

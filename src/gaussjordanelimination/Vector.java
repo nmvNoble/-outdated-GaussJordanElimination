@@ -226,6 +226,78 @@ public class Vector {
         return constants;
     }
     
+    public static double det (List<Vector> vectors, int dimension) {
+        
+        List<Vector> GJ = new ArrayList<Vector>();
+        double[] storeDet = new double[dimension+1];
+        GJ = vectors;
+        //GJ = transposeList(vectors, dimension);
+        System.out.println("Dimension: "+dimension);
+        
+        int down=0, detIndex=0;
+        for(int i=0;i<dimension;i++){
+            down = i;
+            System.out.println("Down: "+down+"----------------------------------------------------");
+            for (int j = i; j < dimension; j++) {
+                System.out.println("\ni: "+i+", j: "+j+" ==================================================");
+                System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).arrayList.get(i)+" ");
+                //printVector(GJ.get(j));
+                if(i == j && GJ.get(j).arrayList.get(i)==1){
+                    storeDet[j] = GJ.get(j).arrayList.get(i);
+                    
+                }
+                if(i == j && GJ.get(j).arrayList.get(i)==0){
+                    storeDet[j] = GJ.get(j).arrayList.get(i);
+                    if (i<dimension-1){
+                        GJ.get(i).swap(GJ.get(i+1));
+                        printVector(GJ.get(i+1));
+                    } 
+                }
+                if(i == j && GJ.get(j).arrayList.get(i)!=1){
+                    storeDet[j] = GJ.get(j).arrayList.get(i);
+                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
+                    //printVector(GJ.get(j));
+                }
+                double tempScalar=0;
+                if(i != j && GJ.get(j).arrayList.get(i)!=0){
+                    //storeDet[j] = GJ.get(j).arrayList.get(i);
+                    //System.out.println(""+i+" < "+j+" && "+GJ.get(j).arrayList.get(i)+"!=0");
+                    tempScalar = -(GJ.get(j).arrayList.get(i)*GJ.get(i).arrayList.get(i));
+                    System.out.println("tempScalar: "+tempScalar+" = -("+GJ.get(j).arrayList.get(i)+"*"+GJ.get(i).arrayList.get(i)+")");
+                    GJ.set(i, GJ.get(i).scale(tempScalar));
+                    //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
+                    GJ.set(j, GJ.get(j).add(GJ.get(i)));
+                    GJ.set(i, GJ.get(i).scale(1/tempScalar));
+                    printVector(GJ.get(j));
+                }
+                System.out.println("\n - = < A F T E R  up > = - ");
+                System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).arrayList.get(i)+" ");
+                    for (int x = 0; x < dimension; x++) {
+                        System.out.print("\nGJ Final GJ.get{" + x + ")");
+                        printVector(GJ.get(x));
+                    }
+            }
+        }
+        
+        System.out.println("\n\nyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeet");
+        
+        for(int i=0;i<dimension;i++){
+            System.out.print("\nGJ Final GJ.get{"+i+")");
+            printVector(GJ.get(i));
+        }
+        
+        
+        System.out.println();
+        double finDet = 1;
+        for(int d = 0;d < dimension; d++){
+            finDet = finDet * storeDet[d];
+            System.out.print(storeDet[d] + "*");
+        }
+        //System.out.print("\nDeterminant: "+finDet+"");
+        return finDet;
+    }
+    
+    
     public static int span(List<Vector> vectors, int dimension)
     {
         double[][] A = new double [dimension][dimension];
