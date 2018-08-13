@@ -29,15 +29,23 @@ public class GaussJordanElimination {
 //        Vector v5 = new Vector(new double[]{1, 2, 5, 4, 3}, 5);
 //        Vector constants = new Vector(new double[]{5, 8, 2, 5, 5}, 5);
 
+        /*Tracing. Link: http://pages.pacificcoast.net/~cazelais/251/gauss-jordan.pdf*/
 //        Vector v1 = new Vector(new double[]{1, 1, 1}, 3);
 //        Vector v2 = new Vector(new double[]{2, 3, 5}, 3);
 //        Vector v3 = new Vector(new double[]{4, 0, 5}, 3);
 //        Vector constants = new Vector(new double[]{5, 8, 2}, 3);
 
+        /*Force-Swap test*/
         Vector v1 = new Vector(new double[]{1, 1, 0}, 3);
         Vector v2 = new Vector(new double[]{2, 2, 2}, 3);
         Vector v3 = new Vector(new double[]{4, 6, 3}, 3);
         Vector constants = new Vector(new double[]{2, 6, 13}, 3);
+
+        /*Transpose Test. gje([[1, 2, 3], [3, 4, 6], [1, 0, 1]], 3, [5, 6, 10]), expected answer is [1, 1, 1]*/
+//        Vector v1 = new Vector(new double[]{1, 2, 3}, 3);
+//        Vector v2 = new Vector(new double[]{3, 4, 6}, 3);
+//        Vector v3 = new Vector(new double[]{1, 0, 1}, 3);
+//        Vector constants = new Vector(new double[]{5, 6, 10}, 3);
 
 //        Vector v1 = new Vector(new double[]{2, 2}, 2);
 //        Vector v2 = new Vector(new double[]{3, 2}, 2);
@@ -56,9 +64,10 @@ public class GaussJordanElimination {
         v.printVector(constants);
         //System.out.println("\nDeterminants: "+v.det(vectors, dimension));
         
-//        System.out.println("Should be:");
-//        System.out.println("Vector: vL[0]: 1.00 vL[1]:  1.00 vL[2]: 1.0");
-//        System.out.print("gje([[1, 2, 4], [1, 2, 6], [0, 2, 3]], 3, [2, 6, 13]), expected answer is [1, 1, 1]");
+        System.out.print("Should be: ");
+        System.out.println("Vector: vL[0]: 1.0 vL[1]: 1.0 vL[2]: 1.0");
+        //System.out.println("Vector: vL[0]: 1.00 vL[1]:  1.00 vL[2]: 1.0");
+        System.out.print("gje([[1, 2, 4], [1, 2, 6], [0, 2, 3]], 3, [2, 6, 13]), expected answer is [1, 1, 1]");
         
         
         

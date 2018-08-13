@@ -5,6 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
+ *
+ * Klaudia Gaia Borromeo
+ * Neil Michael Noble
+ * Iris Libay
+ * 
+ * ADVDISC X22
+ */
+
 public class Matrix {
     private List<Vector> arrayList;
     private int dimension;

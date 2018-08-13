@@ -85,7 +85,7 @@ public class Vector {
 
     public static void printVector(Vector V) {
         List<Double> vectorList = V.getArrayList();
-        System.out.print("\nVector: ");
+        System.out.print("Vector: ");
         for (int i = 0; i < vectorList.size(); i++)
             System.out.print("vL[" + i + "]: " + vectorList.get(i)+" ");
         System.out.println();
@@ -112,7 +112,7 @@ public class Vector {
                 System.out.print(temp.get(i).arrayList.get(j)+" ");
             }
             System.out.println();
-            //System.out.print("\nResult of transpose.get{"+i+")");
+            System.out.print("Result of transpose.get{"+i+")");
             printVector(transpose.get(i));//This one works fine
         }
         for(int i=0;i<dimension;i++){
@@ -146,6 +146,12 @@ public class Vector {
                     if(i<dimension-1){
                         GJ.get(i).swap(GJ.get(i+1));
                         printVector(GJ.get(i+1));
+                        
+                        double tempCon;
+                        tempCon = constants.arrayList.get(j+1);
+                        constants.arrayList.set(j+1, constants.arrayList.get(j));
+                        constants.arrayList.set(j, tempCon);
+                        
                     }
                 }
                 if(i == j && GJ.get(j).arrayList.get(i)!=1){
@@ -170,14 +176,14 @@ public class Vector {
                     constants.arrayList.set(i, (constants.arrayList.get(i) * (1/tempScalar)));
                     printVector(GJ.get(j));
                 }
-                    System.out.println("\n - = < A F T E R  up > = - ");
+                System.out.println("\n - = < A F T E R  up > = - ");
                 System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).arrayList.get(i)+" ");
-                    for (int x = 0; x < dimension; x++) {
-                        System.out.print("\nGJ Final GJ.get{" + x + ")");
-                        printVector(GJ.get(x));
-                    }
-                    System.out.print("\nConstants: ");
-                    printVector(constants);
+                for (int x = 0; x < dimension; x++) {
+                    System.out.print("\nGJ Final GJ.get{" + x + ")");
+                    printVector(GJ.get(x));
+                }
+                System.out.print("\nConstants: ");
+                printVector(constants);
             }
         }
             System.out.println("Down: "+down+"----------------------------------=====================================------------------");
@@ -234,7 +240,7 @@ public class Vector {
         //GJ = transposeList(vectors, dimension);
         System.out.println("Dimension: "+dimension);
         
-        int down=0, detIndex=0;
+        int down=0;
         for(int i=0;i<dimension;i++){
             down = i;
             System.out.println("Down: "+down+"----------------------------------------------------");
