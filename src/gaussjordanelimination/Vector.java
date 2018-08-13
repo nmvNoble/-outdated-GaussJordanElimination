@@ -43,13 +43,13 @@ public class Vector {
         //System.out.println("\nscale by "+scalar);
         printVector(this);
         double[] arr =  new double[arrayList.size()];
-        System.out.print("Matrix: ");
+        //System.out.print("Matrix: ");
         for (int i = 0; i < arrayList.size(); i++){
             arr[i] = arrayList.get(i) * scalar;
             if(arr[i]==-0){
                 arr[i]=0;
             }
-            System.out.print(arr[i]+" = "+arrayList.get(i)+"*"+scalar+",||");
+            //System.out.print(arr[i]+" = "+arrayList.get(i)+"*"+scalar+",||");
         }
         return new Vector(arr, dimension);
     }
@@ -118,11 +118,14 @@ public class Vector {
         int down=0;
         for(int i=0;i<dimension;i++){
             down = i;
+            System.out.println("Down: "+down+"----------------------------------------------------");
             for (int j = i; j < dimension; j++) {
                 System.out.println("\ni: "+i+", j: "+j+" ==================================================");
                 //printVector(GJ.get(j));
                 if(i == j && GJ.get(j).arrayList.get(i)!=1){
+                    constants.arrayList.set(j, constants.arrayList.get(j)*(1/GJ.get(j).arrayList.get(i)));
                     GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
+                    System.out.println("Constant: "+constants.arrayList.get(j)+" = "+constants.arrayList.get(j)+"*"+(1/GJ.get(j).arrayList.get(i)));
                     //printVector(GJ.get(j));
                 }
                 double tempScalar=0, tempConstantScalar=0;
@@ -133,14 +136,50 @@ public class Vector {
                     GJ.set(i, GJ.get(i).scale(tempScalar));
                     //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
                     constants.arrayList.set(i, (constants.arrayList.get(i) * tempScalar));
+                    System.out.println(constants.arrayList.get(i) + " = " + constants.arrayList.get(i) + "*" + tempScalar);
                     GJ.set(j, GJ.get(j).add(GJ.get(i)));
                     constants.arrayList.set(j, constants.arrayList.get(j) + constants.arrayList.get(i));
                     GJ.set(i, GJ.get(i).scale(1/tempScalar));
                     constants.arrayList.set(i, (constants.arrayList.get(i) * (1/tempScalar)));
                     printVector(GJ.get(j));
                 }
+                    System.out.println("\n - = < A F T E R > = - ");
                     for (int x = 0; x < dimension; x++) {
-                        System.out.print("\nGJ Final transpose.get{" + x + ")");
+                        System.out.print("\nGJ Final GJ.get{" + x + ")");
+                        printVector(GJ.get(x));
+                    }
+                    System.out.print("\nConstants: ");
+                    printVector(constants);
+            }
+        }
+            System.out.println("Down: "+down+"----------------------------------=====================================------------------");
+        for(int i=down;i>=0;i--){
+            for (int j = i; j >= 0; j--) {
+                System.out.println("\ni: "+i+", j: "+j+" ============================================Upwards");
+                //printVector(GJ.get(j));
+                if(i == j && GJ.get(j).arrayList.get(i)!=1){
+                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
+                    //printVector(GJ.get(j));
+                }
+                double tempScalar=0;
+                if(i != j && GJ.get(j).arrayList.get(i)!=0){
+                    //System.out.println(""+i+" < "+j+" && "+GJ.get(j).arrayList.get(i)+"!=0");
+                    tempScalar = -(GJ.get(j).arrayList.get(i)*GJ.get(i).arrayList.get(i));
+                    System.out.println(tempScalar+" = -("+GJ.get(j).arrayList.get(i)+"*"+GJ.get(i).arrayList.get(i)+")");
+                    GJ.set(i, GJ.get(i).scale(tempScalar));
+                    //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
+                    constants.arrayList.set(i, (constants.arrayList.get(i) * tempScalar));
+                    System.out.println(constants.arrayList.get(i) + " = " + constants.arrayList.get(i) + "*" + tempScalar);
+                    GJ.set(j, GJ.get(j).add(GJ.get(i)));
+                    constants.arrayList.set(j, constants.arrayList.get(j) + constants.arrayList.get(i));
+                    GJ.set(i, GJ.get(i).scale(1/tempScalar));
+                    constants.arrayList.set(i, (constants.arrayList.get(i) * (1/tempScalar)));
+                    
+                    printVector(GJ.get(dimension-1-j));
+                }
+                    System.out.println("\n - = < A F T E R > = - ");
+                    for (int x = 0; x < dimension; x++) {
+                        System.out.print("\nGJ Final GJ.get{" + x + ")");
                         printVector(GJ.get(x));
                     }
                     System.out.print("\nConstants: ");
@@ -149,13 +188,7 @@ public class Vector {
         }
         
         
-            System.out.println("\n\nyeet");
-        for(int i=0;i<dimension;i++){
-            for (int j = i; j < dimension; j++) {
-                    System.out.print(GJ.get(j).arrayList.get(i)+" ");
-            }
-            System.out.println();
-        }
+            System.out.println("\n\nyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeet");
         
         for(int i=0;i<dimension;i++){
             System.out.print("\nGJ Final GJ.get{"+i+")");
