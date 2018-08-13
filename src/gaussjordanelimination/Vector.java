@@ -64,6 +64,20 @@ public class Vector {
         return new Vector(arr, dimension);
     }
 
+    public Vector swap(Vector toSwap)
+    {
+        double[] arr =  new double[arrayList.size()];
+        double temp = 0;
+        for (int i = 0; i < arrayList.size(); i++){
+            temp = toSwap.getArrayList().get(i);
+            toSwap.getArrayList().set(i, arrayList.get(i));
+            arr[i] = temp;
+            System.out.print(arr[i]+", ");
+            arrayList.set(i, temp);
+        }
+        return this;//new Vector(arr, dimension);
+    }
+
     @Override
     public String toString() {
         return "Vector{" + "arrayList=" + arrayList + '}';
@@ -71,7 +85,7 @@ public class Vector {
 
     public static void printVector(Vector V) {
         List<Double> vectorList = V.getArrayList();
-        System.out.println("\nVector: ");
+        System.out.print("\nVector: ");
         for (int i = 0; i < vectorList.size(); i++)
             System.out.print("vL[" + i + "]: " + vectorList.get(i)+" ");
         System.out.println();
@@ -110,7 +124,6 @@ public class Vector {
     
     public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
         
-        
         List<Vector> GJ = new ArrayList<Vector>();
         GJ = vectors;
         //GJ = transposeList(vectors, dimension);
@@ -126,7 +139,15 @@ public class Vector {
             System.out.println("Down: "+down+"----------------------------------------------------");
             for (int j = i; j < dimension; j++) {
                 System.out.println("\ni: "+i+", j: "+j+" ==================================================");
+                System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).arrayList.get(i)+" ");
                 //printVector(GJ.get(j));
+                if(i == j && GJ.get(j).arrayList.get(i)==0){
+                    System.out.println("SwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwap");
+                    if(i<dimension-1){
+                        GJ.get(i).swap(GJ.get(i+1));
+                        printVector(GJ.get(i+1));
+                    }
+                }
                 if(i == j && GJ.get(j).arrayList.get(i)!=1){
                     constants.arrayList.set(j, constants.arrayList.get(j)*(1/GJ.get(j).arrayList.get(i)));
                     GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
@@ -137,18 +158,20 @@ public class Vector {
                 if(i != j && GJ.get(j).arrayList.get(i)!=0){
                     //System.out.println(""+i+" < "+j+" && "+GJ.get(j).arrayList.get(i)+"!=0");
                     tempScalar = -(GJ.get(j).arrayList.get(i)*GJ.get(i).arrayList.get(i));
-                    System.out.println(tempScalar+" = -("+GJ.get(j).arrayList.get(i)+"*"+GJ.get(i).arrayList.get(i)+")");
+                    System.out.println("tempScalar: "+tempScalar+" = -("+GJ.get(j).arrayList.get(i)+"*"+GJ.get(i).arrayList.get(i)+")");
                     GJ.set(i, GJ.get(i).scale(tempScalar));
                     //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
+                    double tConst = constants.arrayList.get(i);
                     constants.arrayList.set(i, (constants.arrayList.get(i) * tempScalar));
-                    System.out.println(constants.arrayList.get(i) + " = " + constants.arrayList.get(i) + "*" + tempScalar);
+                    //System.out.println(constants.arrayList.get(i) + " = " + tConst + "*" + tempScalar);
                     GJ.set(j, GJ.get(j).add(GJ.get(i)));
                     constants.arrayList.set(j, constants.arrayList.get(j) + constants.arrayList.get(i));
                     GJ.set(i, GJ.get(i).scale(1/tempScalar));
                     constants.arrayList.set(i, (constants.arrayList.get(i) * (1/tempScalar)));
                     printVector(GJ.get(j));
                 }
-                    System.out.println("\n - = < A F T E R > = - ");
+                    System.out.println("\n - = < A F T E R  up > = - ");
+                System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).arrayList.get(i)+" ");
                     for (int x = 0; x < dimension; x++) {
                         System.out.print("\nGJ Final GJ.get{" + x + ")");
                         printVector(GJ.get(x));
@@ -163,6 +186,7 @@ public class Vector {
                 System.out.println("\ni: "+i+", j: "+j+" ============================================Upwards");
                 //printVector(GJ.get(j));
                 if(i == j && GJ.get(j).arrayList.get(i)!=1){
+                    constants.arrayList.set(j, constants.arrayList.get(j)*(1/GJ.get(j).arrayList.get(i)));
                     GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
                     //printVector(GJ.get(j));
                 }
@@ -182,7 +206,7 @@ public class Vector {
                     
                     printVector(GJ.get(dimension-1-j));
                 }
-                    System.out.println("\n - = < A F T E R > = - ");
+                    System.out.println("\n - = < A F T E R  down > = - ");
                     for (int x = 0; x < dimension; x++) {
                         System.out.print("\nGJ Final GJ.get{" + x + ")");
                         printVector(GJ.get(x));
