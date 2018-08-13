@@ -30,6 +30,16 @@ public class Vector {
         this.dimension = dimension;
     }
 
+    public int getDimension()
+    {
+        return this.dimension;
+    }
+
+    public List<Double> getArrayList()
+    {
+        return this.arrayList;
+    }
+
     public Vector add(Vector addend)
     {
         double[] arr =  new double[arrayList.size()];
@@ -52,11 +62,6 @@ public class Vector {
             //System.out.print(arr[i]+" = "+arrayList.get(i)+"*"+scalar+",||");
         }
         return new Vector(arr, dimension);
-    }
-
-    public List<Double> getArrayList()
-    {
-        return this.arrayList;
     }
 
     @Override
