@@ -57,7 +57,7 @@ public class GaussJordanElimination {
 //        Vector v2 = new Vector(new double[]{3, 2}, 2);
 //        Vector constants = new Vector(new double[]{1, 2}, 2);
 
-        /*Inverse NOT TRANSPOSED. Link: https://www.wikihow.com/Find-the-Inverse-of-a-3x3-Matrix#Using_Linear_Row_Reduction_to_Find_the_Inverse_Matrix_sub*/
+        /*Inverse. Link: https://www.wikihow.com/Find-the-Inverse-of-a-3x3-Matrix#Using_Linear_Row_Reduction_to_Find_the_Inverse_Matrix_sub*/
         Vector v1 = new Vector(new double[]{3, 2, 0}, 3);
         Vector v2 = new Vector(new double[]{0, 0, 1}, 3);
         Vector v3 = new Vector(new double[]{2, -2, 1}, 3);
@@ -77,7 +77,7 @@ public class GaussJordanElimination {
         
         //System.out.println("\nDeterminants: "+v.det(vectors, dimension));
         
-        System.out.println("\nInverse: "+v.inverse(vectors, dimension));
+        //System.out.println("\nInverse: "+v.inverse(vectors, dimension));
         
         
         
@@ -90,25 +90,38 @@ public class GaussJordanElimination {
         
         
         
-//        Vector vm0 = new Vector(new double[]{1, 3}, 2);
-//        Vector vm1 = new Vector(new double[]{2, 4}, 2);
-//        Vector vm2 = new Vector(new double[]{2, 1}, 2);
-//        Vector vm3 = new Vector(new double[]{0, 2}, 2);
-//      
-//        List<Vector> vecM1 = new ArrayList<Vector>();
-//        List<Vector> vecM2 = new ArrayList<Vector>();
-//
-//        vecM1.add(vm0);
-//        vecM1.add(vm1);
-//        vecM2.add(vm2);
-//        vecM2.add(vm3);
-//        
-//        Matrix m = new Matrix(0);
-//        Matrix m1 = new Matrix(0);
-//        Matrix m1 = new Matrix(vecM1, 2);
-//        Matrix m2 = new Matrix(0);
-//        Matrix m2 = new Matrix(vecM2, 2);
-//        m.times(m1, m2);
+        Vector vm0 = new Vector(new double[]{1, 3}, 2);
+        Vector vm1 = new Vector(new double[]{2, 4}, 2);
+        Vector vm2 = new Vector(new double[]{2, 1}, 2);
+        Vector vm3 = new Vector(new double[]{0, 2}, 2);
+      
+        List<Vector> vecM1 = new ArrayList<Vector>();
+        List<Vector> vecM2 = new ArrayList<Vector>();
+
+        vecM1.add(vm0);
+        vecM1.add(vm1);
+        vecM2.add(vm2);
+        vecM2.add(vm3);
+        
+        //Matrix m1 = new Matrix(0);
+        Matrix m1 = new Matrix(vecM1, 2);
+        //Matrix m2 = new Matrix(0);
+        Matrix m2 = new Matrix(vecM2, 2);
+        //m1.times(m2);
+        
+        Vector vm8 = new Vector(new double[]{6, 4, 2}, 3);
+        Vector vm9 = new Vector(new double[]{1, -2, 8}, 3);
+        Vector vm10 = new Vector(new double[]{1, 5, 7}, 3);
+        List<Vector> vecM5 = new ArrayList<Vector>();
+        vecM5.add(vm8);
+        vecM5.add(vm9);
+        vecM5.add(vm10);
+        Matrix m = new Matrix(vecM5, vm10.getDimension());
+        System.out.println("\n\nDet: "+m.det());
+        Matrix mInv = new Matrix(vectors, dimension);
+        mInv.inverse();
+        
+        
         
         
         

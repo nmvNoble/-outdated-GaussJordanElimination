@@ -51,7 +51,7 @@ public class Vector {
     public Vector scale(double scalar)
     {
         //System.out.println("\nscale by "+scalar);
-        printVector(this);
+        //printVector(this);
         double[] arr =  new double[arrayList.size()];
         //System.out.print("Matrix: ");
         for (int i = 0; i < arrayList.size(); i++){
@@ -59,7 +59,7 @@ public class Vector {
             if(arr[i]==-0){
                 arr[i]=0;
             }
-            System.out.print(arr[i]+" = "+arrayList.get(i)+"*"+scalar+",||");
+            //System.out.print(arr[i]+" = "+arrayList.get(i)+"*"+scalar+",||");
         }
         return new Vector(arr, dimension);
     }
@@ -72,7 +72,7 @@ public class Vector {
             temp = toSwap.getArrayList().get(i);
             toSwap.getArrayList().set(i, arrayList.get(i));
             arr[i] = temp;
-            System.out.print(arr[i]+", ");
+            //System.out.print(arr[i]+", ");
             arrayList.set(i, temp);
         }
         return this;
@@ -92,7 +92,7 @@ public class Vector {
     }
     
     public static List<Vector> transposeList(List<Vector> vectors, int dimension){
-        System.out.print(dimension);
+        //System.out.print(dimension);
         List<Vector> transpose = new ArrayList<>();
         
         for(int i=0;i<dimension;i++){
@@ -102,13 +102,13 @@ public class Vector {
             }
             Vector e = new Vector(tmp, dimension);
                 transpose.add(e);
-            System.out.println();
-            System.out.print("Result of transpose.get{"+i+")");
-            printVector(transpose.get(i));
+            //System.out.println();
+            //System.out.print("Result of transpose.get{"+i+")");
+            //printVector(transpose.get(i));
         }
         for(int i=0;i<dimension;i++){
-            System.out.print("\noboiFinal transpose.get{"+i+")");
-            printVector(transpose.get(i));//This one prints only the last
+            //System.out.print("\noboiFinal transpose.get{"+i+")");
+            //printVector(transpose.get(i));
         }
         return transpose;
     }
@@ -241,14 +241,6 @@ public class Vector {
             Vector v = new Vector(temp, dimension);
             inv.add(v);
         }
-        for(int a=0;a<dimension;a++){
-            for (int b = 0; b < vectors.size(); b++) {
-                if(a==b)
-                    inv.get(b).arrayList.set(a, (double)1);
-                else
-                    inv.get(b).arrayList.set(a, (double)0);
-            }
-        }
         
         int down=0;
         for(int i=0;i<dimension;i++){
@@ -339,8 +331,9 @@ public class Vector {
             System.out.print("\nGJ Final GJ.get{"+i+")");
             printVector(GJ.get(i));
         }
+        inv = transposeList(inv, dimension);
         for(int i=0;i<dimension;i++){
-            System.out.print("\nInverse inv.get{"+i+")");
+            System.out.print("\n------------Inverse inv.get{"+i+")");
             printVector(inv.get(i));
         }
         return inv;

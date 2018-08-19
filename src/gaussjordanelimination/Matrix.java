@@ -1,6 +1,9 @@
 package gaussjordanelimination;
 
 import gaussjordanelimination.Vector;
+import static gaussjordanelimination.Vector.printVector;
+import static gaussjordanelimination.Vector.transposeList;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,9 +26,9 @@ public class Matrix {
             this.dimension = dimension;
 	}
 	
-    public Matrix(Vector[] arrayList, int dimension)
+    public Matrix(List<Vector> arrayList, int dimension)//Vector[] arrayList, int dimension)
     {
-        this.arrayList = Arrays.stream(arrayList).collect(Collectors.toList());
+        this.arrayList = arrayList;//Arrays.stream(arrayList).collect(Collectors.toList());
         this.dimension = dimension;
     }
 	
@@ -41,107 +44,224 @@ public class Matrix {
     public void times(Matrix B)
     {
         Matrix A = this;
-
-        double b[][] = new double[B.dimension][B.dimension];
-        b = ListTo2DArray(B.arrayList,B.dimension);
-        double a[][] = new double[A.dimension][A.dimension];
-        a = ListTo2DArray(A.arrayList, A.dimension);
-
-        int aColSize = a[0].length; //matrix A columns length
-        int bRowSize = b.length; //matrix B row length
-
-        if(aColSize != bRowSize)
-        {
-            System.out.println("Incompatible matrix size.");
+        List<Vector> tempList = new ArrayList<Vector>();
+        for (int a = 0; a < dimension; a++) {
+            double[] temp = new double[dimension];
+            for (int b = 0; b < dimension; b++) {
+                    temp[b]=0;
+            }
+            Vector v = new Vector(temp, dimension);
+            tempList.add(v);
         }
+        
+        Matrix C = new Matrix(tempList, dimension);
 
-        int matrixRowSize = a.length; //final matrix row length
-        int matrixColSize = b[0].length; //final matrix column length
-
-        double[][] matrixResult = new double[matrixRowSize][matrixColSize];
-
-        for(int i = 0; i < matrixRowSize; i++)
-        {
-            for(int j = 0; j < matrixColSize; j++)
-            {
-                for(int k = 0; k < aColSize; k++)
-                {
-                    matrixResult[i][j] += a[i][k] * b[k][j];
+        for(int i = 0; i < this.dimension; i++){
+            for (int j = 0; j < this.dimension; j++) {
+                double summation = 0;
+                for(int s = 0; s < dimension; s++){
+                    //summation += A.arrayList.get(j).getArrayList().get(i).scale(B.arrayList.get(j).getArrayList().get(j));
                 }
-            }
-        }
+                C.arrayList.get(j).getArrayList().set(i, summation);
 
-        for(int i = 0; i < matrixRowSize; i++)
-        {
-            for(int j = 0; j < matrixColSize; j++)
-            {
-                System.out.println(matrixResult[i][j]+ " ");
             }
-            System.out.println();
         }
 
     }
-    
-    
-	
-	//inverse function doesnt work properly yet due to the return value "x" not being a Vector still trying to fix and still needs GJ
-//	public Matrix inverse()
-//	{
-//		
-//		Matrix A = this;
-//		
-//		int N = A.dimension;
-//		
-//		double x[][] = new double[N][N];
-//		double a[][] = new double[N][N];
-//		a = ListTo2DArray(A.arrayList,N);
-//		double b[][] = new double[N][N];
-//		
-//		int it[] = new int[N];
-//		
-//		for(int i = 0; i < N; i++)
-//		{
-//			b[i][i] = 1; 
-//		}
-//		
-//		//needs Gauss_jordan for the upper triangle of the matrix
-//		//Gauss_Jordan(A.getArrayList, A.dimension, constants)
-//		
-//		for(int i = 0; i < N; i++)
-//		{
-//			for(int j = i+1; j < N; j++)
-//			{
-//				for(int k = 0; k < N; k++)
-//				{
-//					b[it[j]][k] -= a[it[j]][i]*b[it[i]][k];
-//					
-//				}
-//			}
-//		}
-//		
-//		for(int i = 0; i < N; i++)
-//		{
-//			x[N-1][i] = b[it[N-1]][i]/a[it[N-1]][N-1];
-//			for(int j = N-2; j >= 0; j--)
-//			{
-//				x[j][i] = b[it[j]][i];
-//				for(int k = j+1; k < N; k++)
-//				{
-//					x[j][i] -= a[it[j]][k]* x[k][i];
-//				}
-//				x[j][i] /= a[it[j]][j];
-//			}
-//			
-//		}
-//		
-//		
-//		
-//		return x; //helb how to transfer x into a Vector variable ooOf
-//
-//	}
 
+    public double det ( ) {
+        List<Vector> vectors = this.arrayList;
+        int dimension = vectors.get(0).getDimension();
+        
+        List<Vector> GJ = new ArrayList<Vector>();
+        double[] storeDet = new double[dimension+1];
+        //GJ = vectors;
+        GJ = transposeList(vectors, dimension);
+        //System.out.println("Dimension: "+dimension);
+        
+        int down=0;
+        for(int i=0;i<dimension;i++){
+            down = i;
+            //System.out.println("Down: "+down+"----------------------------------------------------");
+            for (int j = i; j < dimension; j++) {
+                //System.out.println("\ni: "+i+", j: "+j+" ==================================================");
+                //System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).getArrayList().get(i)+" ");
+                //printVector(GJ.get(j));
+                if(i == j && GJ.get(j).getArrayList().get(i)==1){
+                    storeDet[j] = GJ.get(j).getArrayList().get(i);
+                    
+                }
+                if(i == j && GJ.get(j).getArrayList().get(i)==0){
+                    storeDet[j] = GJ.get(j).getArrayList().get(i);
+                    if (i<dimension-1){
+                        GJ.get(i).swap(GJ.get(i+1));
+                        //printVector(GJ.get(i+1));
+                    } 
+                }
+                if(i == j && GJ.get(j).getArrayList().get(i)!=1){
+                    storeDet[j] = GJ.get(j).getArrayList().get(i);
+                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).getArrayList().get(i)));
+                    //printVector(GJ.get(j));
+                }
+                double tempScalar=0;
+                if(i != j && GJ.get(j).getArrayList().get(i)!=0){
+                    //storeDet[j] = GJ.get(j).arrayList.get(i);
+                    //System.out.println(""+i+" < "+j+" && "+GJ.get(j).arrayList.get(i)+"!=0");
+                    tempScalar = -(GJ.get(j).getArrayList().get(i)*GJ.get(i).getArrayList().get(i));
+                    //System.out.println("tempScalar: "+tempScalar+" = -("+GJ.get(j).getArrayList().get(i)+"*"+GJ.get(i).getArrayList().get(i)+")");
+                    GJ.set(i, GJ.get(i).scale(tempScalar));
+                    //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
+                    GJ.set(j, GJ.get(j).add(GJ.get(i)));
+                    GJ.set(i, GJ.get(i).scale(1/tempScalar));
+                    //printVector(GJ.get(j));
+                }
+                //System.out.println("\n - = < A F T E R  up > = - ");
+                //System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).getArrayList().get(i)+" ");
+                    for (int x = 0; x < dimension; x++) {
+                        //System.out.print("\nGJ Final GJ.get{" + x + ")");
+                        //printVector(GJ.get(x));
+                    }
+            }
+        }
+        
+        //System.out.println("\n\nyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeet");
+        
+        for(int i=0;i<dimension;i++){
+            //System.out.print("\nGJ Final GJ.get{"+i+")");
+            //printVector(GJ.get(i));
+        }
+        
+        
+        System.out.println();
+        double finDet = 1;
+        for(int d = 0;d < dimension; d++){
+            finDet = finDet * storeDet[d];
+            //System.out.print(storeDet[d] + "*");
+        }
+        //System.out.print("\nDeterminant: "+finDet+"");
+        return finDet;
+    }
 	
-	
-	
+    public Matrix inverse() {
+        List<Vector> vectors = this.arrayList;
+        int dimension = vectors.get(0).getDimension();
+        
+        List<Vector> GJ = new ArrayList<Vector>();
+        List<Vector> inv = new ArrayList<Vector>();
+        //GJ = vectors;
+        GJ = transposeList(vectors, dimension);
+        //System.out.println("Dimension: "+dimension);
+        for (int a = 0; a < dimension; a++) {
+            double[] temp = new double[dimension];
+            for (int b = 0; b < dimension; b++) {
+                if(a==b)
+                    temp[b]=1;
+                else
+                    temp[b]=0;
+            }
+            Vector v = new Vector(temp, dimension);
+            inv.add(v);
+        }
+        
+        int down=0;
+        for(int i=0;i<dimension;i++){
+            down = i;
+            //System.out.println("Down: "+down+"----------------------------------------------------");
+            for (int j = i; j < dimension; j++) {
+                //System.out.println("\ni: "+i+", j: "+j+" ==================================================");
+                //System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).getArrayList().get(i)+" ");
+                //printVector(GJ.get(j));
+                if(i == j && GJ.get(j).getArrayList().get(i)==0){
+                    //System.out.println("SwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwapSwap");
+                    if(i<dimension-1){
+                        GJ.get(i).swap(GJ.get(i+1));
+                        inv.get(i).swap(inv.get(i+1));
+                        //printVector(GJ.get(i+1));                        
+                    }
+                }
+                if(i == j && GJ.get(j).getArrayList().get(i)!=1){
+                    //System.out.println("!=1");
+                    inv.set(i, inv.get(j).scale(1/GJ.get(j).getArrayList().get(i)));
+                    //printVector(inv.get(i));
+                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).getArrayList().get(i)));
+                    //printVector(GJ.get(i));
+                }
+                double tempScalar=0;
+                if(i != j && GJ.get(j).getArrayList().get(i)!=0){
+                    //System.out.println(""+i+" < "+j+" && "+GJ.get(j).arrayList.get(i)+"!=0");
+                    tempScalar = -(GJ.get(j).getArrayList().get(i)*GJ.get(i).getArrayList().get(i));
+                    //System.out.println("tempScalar: "+tempScalar+" = -("+GJ.get(j).getArrayList().get(i)+"*"+GJ.get(i).getArrayList().get(i)+")");
+                    GJ.set(i, GJ.get(i).scale(tempScalar));
+                    inv.set(i, inv.get(i).scale(tempScalar));
+                    //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
+                    GJ.set(j, GJ.get(j).add(GJ.get(i)));
+                    GJ.set(i, GJ.get(i).scale(1/tempScalar));
+                    inv.set(j, inv.get(j).add(inv.get(i)));
+                    inv.set(i, inv.get(i).scale(1/tempScalar));
+                    //printVector(GJ.get(j));
+                }
+                //System.out.println("\n - = < A F T E R  downwards > = - ");
+                //System.out.println("GJ.get("+j+").arrayList.get("+i+") = "+GJ.get(j).getArrayList().get(i)+" ");
+                for (int x = 0; x < dimension; x++) {
+                    //System.out.print("\nGJ Final GJ.get{" + x + ")");
+                    //printVector(GJ.get(x));
+                    //printVector(inv.get(x));
+                }
+            }
+        }
+            //System.out.println("Down: "+down+"----------------------------------=====================================------------------");
+        for(int i=down;i>=0;i--){
+            for (int j = i; j >= 0; j--) {
+                //System.out.println("\ni: "+i+", j: "+j+" ============================================Upwards");
+                //printVector(GJ.get(j));
+                if(i == j && GJ.get(j).getArrayList().get(i)!=1){
+                    inv.set(i, inv.get(j).scale(1/GJ.get(j).getArrayList().get(i)));
+                    //printVector(inv.get(i));
+                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).getArrayList().get(i)));
+                    //printVector(GJ.get(i));
+                }
+                double tempScalar=0;
+                if(i != j && GJ.get(j).getArrayList().get(i)!=0){
+                    //System.out.println(""+i+" < "+j+" && "+GJ.get(j).arrayList.get(i)+"!=0");
+                    tempScalar = -(GJ.get(j).getArrayList().get(i)*GJ.get(i).getArrayList().get(i));
+                    //System.out.println(tempScalar+" = -("+GJ.get(j).getArrayList().get(i)+"*"+GJ.get(i).getArrayList().get(i)+")");
+                    GJ.set(i, GJ.get(i).scale(tempScalar));
+                    inv.set(i, inv.get(i).scale(tempScalar));
+                    //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
+                    GJ.set(j, GJ.get(j).add(GJ.get(i)));
+                    GJ.set(i, GJ.get(i).scale(1/tempScalar));
+                    inv.set(j, inv.get(j).add(inv.get(i)));
+                    inv.set(i, inv.get(i).scale(1/tempScalar));
+                    
+                    //printVector(GJ.get(dimension-1-j));
+                    
+                }
+                    //System.out.println("\n - = < A F T E R  upwards > = - ");
+                    for (int x = 0; x < dimension; x++) {
+                        //System.out.print("\nGJ Final GJ.get{" + x + ")");
+                        //printVector(GJ.get(x));
+                        //printVector(inv.get(x));
+                    }
+            }
+        }
+        
+        
+            //System.out.println("\n\nyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeetyeet");
+        
+        for(int i=0;i<dimension;i++){
+            //System.out.print("\nGJ Final GJ.get{"+i+")");
+            //printVector(GJ.get(i));
+        }
+        inv = transposeList(inv, dimension);
+        for(int i=0;i<dimension;i++){
+            System.out.print("\nInverse inv.get{"+i+")");
+            printVector(inv.get(i));
+        }
+        
+        Matrix inverse = new Matrix(inv, inv.get(0).getDimension());
+        
+        return inverse;
+    }
+    
 	
 }
