@@ -59,7 +59,7 @@ public class Vector {
             if(arr[i]==-0){
                 arr[i]=0;
             }
-            //System.out.print(arr[i]+" = "+arrayList.get(i)+"*"+scalar+",||");
+            System.out.print(arr[i]+" = "+arrayList.get(i)+"*"+scalar+",||");
         }
         return new Vector(arr, dimension);
     }
@@ -75,7 +75,7 @@ public class Vector {
             System.out.print(arr[i]+", ");
             arrayList.set(i, temp);
         }
-        return this;//new Vector(arr, dimension);
+        return this;
     }
 
     @Override
@@ -227,8 +227,8 @@ public class Vector {
         
         List<Vector> GJ = new ArrayList<Vector>();
         List<Vector> inv = new ArrayList<Vector>();
-        GJ = vectors;
-        //GJ = transposeList(vectors, dimension);
+        //GJ = vectors;
+        GJ = transposeList(vectors, dimension);
         System.out.println("Dimension: "+dimension);
         for (int a = 0; a < dimension; a++) {
             double[] temp = new double[dimension];
@@ -267,9 +267,11 @@ public class Vector {
                     }
                 }
                 if(i == j && GJ.get(j).arrayList.get(i)!=1){
-                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
+                    System.out.println("!=1");
                     inv.set(i, inv.get(j).scale(1/GJ.get(j).arrayList.get(i)));
-                    //printVector(GJ.get(j));
+                    printVector(inv.get(i));
+                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
+                    printVector(GJ.get(i));
                 }
                 double tempScalar=0;
                 if(i != j && GJ.get(j).arrayList.get(i)!=0){
@@ -300,9 +302,10 @@ public class Vector {
                 System.out.println("\ni: "+i+", j: "+j+" ============================================Upwards");
                 //printVector(GJ.get(j));
                 if(i == j && GJ.get(j).arrayList.get(i)!=1){
-                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
                     inv.set(i, inv.get(j).scale(1/GJ.get(j).arrayList.get(i)));
-                    //printVector(GJ.get(j));
+                    printVector(inv.get(i));
+                    GJ.set(i, GJ.get(j).scale(1/GJ.get(j).arrayList.get(i)));
+                    printVector(GJ.get(i));
                 }
                 double tempScalar=0;
                 if(i != j && GJ.get(j).arrayList.get(i)!=0){
@@ -314,11 +317,11 @@ public class Vector {
                     //System.out.println(GJ.get(i) + " = " + GJ.get(i) + "*" + tempScalar);
                     GJ.set(j, GJ.get(j).add(GJ.get(i)));
                     GJ.set(i, GJ.get(i).scale(1/tempScalar));
+                    inv.set(j, inv.get(j).add(inv.get(i)));
+                    inv.set(i, inv.get(i).scale(1/tempScalar));
                     
                     printVector(GJ.get(dimension-1-j));
                     
-                    inv.set(j, inv.get(j).add(inv.get(i)));
-                    inv.set(i, inv.get(i).scale(1/tempScalar));
                 }
                     System.out.println("\n - = < A F T E R  upwards > = - ");
                     for (int x = 0; x < dimension; x++) {
@@ -347,8 +350,8 @@ public class Vector {
         
         List<Vector> GJ = new ArrayList<Vector>();
         double[] storeDet = new double[dimension+1];
-        GJ = vectors;
-        //GJ = transposeList(vectors, dimension);
+        //GJ = vectors;
+        GJ = transposeList(vectors, dimension);
         System.out.println("Dimension: "+dimension);
         
         int down=0;
@@ -414,10 +417,8 @@ public class Vector {
         return finDet;
     }
     
-    
     public static int span(List<Vector> vectors, int dimension)
     {
-        double[][] A = new double [dimension][dimension];
         int span = 0;
         
   	
