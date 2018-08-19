@@ -29,17 +29,17 @@ public class GaussJordanElimination {
 //        Vector v5 = new Vector(new double[]{1, 2, 5, 4, 3}, 5);
 //        Vector constants = new Vector(new double[]{5, 8, 2, 5, 5}, 5);
 
-        /*Tracing. Link: http://pages.pacificcoast.net/~cazelais/251/gauss-jordan.pdf*/
+        /*Tracing NOT TRANSPOSED. Link: http://pages.pacificcoast.net/~cazelais/251/gauss-jordan.pdf*/
 //        Vector v1 = new Vector(new double[]{1, 1, 1}, 3);
 //        Vector v2 = new Vector(new double[]{2, 3, 5}, 3);
 //        Vector v3 = new Vector(new double[]{4, 0, 5}, 3);
 //        Vector constants = new Vector(new double[]{5, 8, 2}, 3);
 
-        /*Force-Swap test*/
-        Vector v1 = new Vector(new double[]{1, 1, 0}, 3);
-        Vector v2 = new Vector(new double[]{2, 2, 2}, 3);
-        Vector v3 = new Vector(new double[]{4, 6, 3}, 3);
-        Vector constants = new Vector(new double[]{2, 6, 13}, 3);
+        /*Force-Swap test NOT TRANSPOSED*/
+//        Vector v1 = new Vector(new double[]{1, 1, 0}, 3);
+//        Vector v2 = new Vector(new double[]{2, 2, 2}, 3);
+//        Vector v3 = new Vector(new double[]{4, 6, 3}, 3);
+//        Vector constants = new Vector(new double[]{2, 6, 13}, 3);
 
         /*Transpose Test. gje([[1, 2, 3], [3, 4, 6], [1, 0, 1]], 3, [5, 6, 10]), expected answer is [1, 1, 1]*/
 //        Vector v1 = new Vector(new double[]{1, 2, 3}, 3);
@@ -50,6 +50,12 @@ public class GaussJordanElimination {
 //        Vector v1 = new Vector(new double[]{2, 2}, 2);
 //        Vector v2 = new Vector(new double[]{3, 2}, 2);
 //        Vector constants = new Vector(new double[]{1, 2}, 2);
+
+        /*Inverse NOT TRANSPOSED. Link: https://www.wikihow.com/Find-the-Inverse-of-a-3x3-Matrix#Using_Linear_Row_Reduction_to_Find_the_Inverse_Matrix_sub*/
+        Vector v1 = new Vector(new double[]{3, 0, 2}, 3);
+        Vector v2 = new Vector(new double[]{2, 0, -2}, 3);
+        Vector v3 = new Vector(new double[]{0, 1, 1}, 3);
+        Vector constants = new Vector(new double[]{5, 8, 2}, 3);
         
         List<Vector> vectors = new ArrayList<Vector>();
         vectors.add(v1);
@@ -59,15 +65,16 @@ public class GaussJordanElimination {
         //vectors.add(v5);
         int dimension = vectors.get(0).getDimension();
 
-        constants = v.Gauss_Jordan(vectors, dimension, constants);
-        System.out.print("\n\nConstants: ");
-        v.printVector(constants);
+        //constants = v.Gauss_Jordan(vectors, dimension, constants);
+        //System.out.print("\n\nConstants: ");
+        //v.printVector(constants);
         //System.out.println("\nDeterminants: "+v.det(vectors, dimension));
+        System.out.println("\nInverse: "+v.inverse(vectors, dimension));
         
-        System.out.print("Should be: ");
-        System.out.println("Vector: vL[0]: 1.0 vL[1]: 1.0 vL[2]: 1.0");
-        //System.out.println("Vector: vL[0]: 1.00 vL[1]:  1.00 vL[2]: 1.0");
-        System.out.print("gje([[1, 2, 4], [1, 2, 6], [0, 2, 3]], 3, [2, 6, 13]), expected answer is [1, 1, 1]");
+//        System.out.print("Should be: ");
+//        System.out.println("Vector: vL[0]: 1.0 vL[1]: 1.0 vL[2]: 1.0");
+//        //System.out.println("Vector: vL[0]: 1.00 vL[1]:  1.00 vL[2]: 1.0");
+//        System.out.print("gje([[1, 2, 4], [1, 2, 6], [0, 2, 3]], 3, [2, 6, 13]), expected answer is [1, 1, 1]");
         
         
         
