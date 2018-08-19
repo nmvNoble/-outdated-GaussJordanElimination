@@ -93,43 +93,18 @@ public class Vector {
     
     public static List<Vector> transposeList(List<Vector> vectors, int dimension){
         System.out.print(dimension);
-        double[] tmp = new double[dimension];
-        Vector e = new Vector(tmp, dimension);
         List<Vector> transpose = new ArrayList<>();
-        double val;
         
-//        //List<List<T>> ret = new ArrayList<List<T>>();
-//        final int N = dimension;
-//        for (int j = 0; j < N; j++) {
-//            //List<T> col = new ArrayList<T>();
-//            double[] tmp = new double[dimension];
-//            //for (List<T> row : table) {
-//            for (int i = 0; i<N; i++) {
-//                tmp[i] = vectors.get(i).getArrayList().get(j);
-//                e.arrayList.add(tmp[i]);
-//            }
-//            transpose.add(e);
-//        }
-        
-        for (int t=0; t<tmp.length; t++)
-            transpose.add(e);
         for(int i=0;i<dimension;i++){
-                List<Vector> temp = new ArrayList<>();
-                for (int t = 0; t < tmp.length; t++) {
-                    temp.add(e);
-                }
+            double[] tmp = new double[dimension];
             for (int j = 0; j < dimension; j++) {
-                //System.out.print("\nplacing value in transpose " +i + ")");
-                val = vectors.get(j).arrayList.get(i);
-                temp.get(i).arrayList.set(j, val);
-                //val2 = temp.get(i).arrayList.get(j);
-                //transpose.get(i).arrayList.set(j, val2);
-                System.out.print(temp.get(i).arrayList.get(j)+" ");
+                tmp[j] = vectors.get(j).arrayList.get(i);
             }
-                transpose.set(i, temp.get(i));
+            Vector e = new Vector(tmp, dimension);
+                transpose.add(e);
             System.out.println();
             System.out.print("Result of transpose.get{"+i+")");
-            printVector(transpose.get(i));//This one works fine
+            printVector(transpose.get(i));
         }
         for(int i=0;i<dimension;i++){
             System.out.print("\noboiFinal transpose.get{"+i+")");
@@ -141,8 +116,8 @@ public class Vector {
     public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
         
         List<Vector> GJ = new ArrayList<Vector>();
-        GJ = vectors;
-        //GJ = transposeList(vectors, dimension);
+        //GJ = vectors;
+        GJ = transposeList(vectors, dimension);
         System.out.println("Dimension: "+dimension);
         for(int i=0;i<dimension;i++){
             //System.out.print("\nGJ Final transpose.get{"+i+")");
@@ -256,16 +231,16 @@ public class Vector {
         //GJ = transposeList(vectors, dimension);
         System.out.println("Dimension: "+dimension);
         for (int a = 0; a < dimension; a++) {
-	double[] temp = new double[dimension];
-	for (int b = 0; b < dimension; b++) {
-            if(a==b)
-		temp[b]=1;
-	    else
-		temp[b]=0;
-	}
-	Vector v = new Vector(temp, dimension);
+            double[] temp = new double[dimension];
+            for (int b = 0; b < dimension; b++) {
+                if(a==b)
+                    temp[b]=1;
+                else
+                    temp[b]=0;
+            }
+            Vector v = new Vector(temp, dimension);
             inv.add(v);
-}
+        }
         for(int a=0;a<dimension;a++){
             for (int b = 0; b < vectors.size(); b++) {
                 if(a==b)
