@@ -109,15 +109,20 @@ public class GaussJordanElimination {
         Matrix m2 = new Matrix(vecM2, 2);
         //m1.times(m2);
         
-        Vector vm8 = new Vector(new double[]{6, 4, 2}, 3);
-        Vector vm9 = new Vector(new double[]{1, -2, 8}, 3);
-        Vector vm10 = new Vector(new double[]{1, 5, 7}, 3);
+        
+        Vector vm8 = new Vector(new double[]{0, 2}, 2);
+        Vector vm9 = new Vector(new double[]{4, 7}, 2);
+        
+//        Vector vm8 = new Vector(new double[]{6, 4, 2}, 3);
+//        Vector vm9 = new Vector(new double[]{1, -2, 8}, 3);
+//        Vector vm10 = new Vector(new double[]{1, 5, 7}, 3);
         List<Vector> vecM5 = new ArrayList<Vector>();
         vecM5.add(vm8);
         vecM5.add(vm9);
-        vecM5.add(vm10);
-        Matrix m = new Matrix(vecM5, vm10.getDimension());
+        //vecM5.add(vm10);
+        Matrix m = new Matrix(vecM5, vm9.getDimension());
         System.out.println("\n\nDet: "+m.det());
+        
         Matrix mInv = new Matrix(vectors, dimension);
         mInv.inverse();
         

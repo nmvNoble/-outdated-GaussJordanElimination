@@ -73,9 +73,13 @@ public class Matrix {
         List<Vector> vectors = this.arrayList;
         int dimension = vectors.get(0).getDimension();
         
+        if(dimension == 2){
+            return vectors.get(0).getArrayList().get(0) * vectors.get(1).getArrayList().get(1)
+                    - vectors.get(0).getArrayList().get(1)*vectors.get(1).getArrayList().get(0);
+        }
+        
         List<Vector> GJ = new ArrayList<Vector>();
         double[] storeDet = new double[dimension+1];
-        //GJ = vectors;
         GJ = transposeList(vectors, dimension);
         //System.out.println("Dimension: "+dimension);
         
