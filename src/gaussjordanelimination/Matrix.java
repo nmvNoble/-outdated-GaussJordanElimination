@@ -202,8 +202,10 @@ public class Matrix {
         System.out.println("\nInverse: ");
         for(int i=0;i<dimension;i++){
             List<Double> vectorList = inv.get(i).getArrayList();
-            for (int j = 0; j < vectorList.size(); j++) 
+            System.out.print("Vector " + i + ": ");
+            for (int j = 0; j < vectorList.size(); j++) {
                 System.out.print(vectorList.get(j) + ", ");
+            }
             System.out.println();
         }
         Matrix inverse = new Matrix(inv, inv.get(0).getDimension());

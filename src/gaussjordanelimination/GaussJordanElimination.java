@@ -124,7 +124,7 @@ public class GaussJordanElimination {
         m.det();
         //System.out.println("\n\nDet: "+m.det());
         
-        Matrix mInv = new Matrix(vectors, dimension);
+        Matrix mInv = new Matrix(vecM5, dimension);
         mInv.inverse();
         
         
