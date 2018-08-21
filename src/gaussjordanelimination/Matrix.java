@@ -43,8 +43,7 @@ public class Matrix {
         return matrix;
     }
 	
-    public void times(Matrix B)
-    {
+    public void times(Matrix B)    {
         Matrix A = this;
 
         double a[][] = new double[A.dimension][A.dimension];
@@ -292,9 +291,15 @@ public class Matrix {
             //printVector(GJ.get(i));
         }
         inv = transposeList(inv, dimension);
+        System.out.println("\nInverse: ");
         for(int i=0;i<dimension;i++){
-            System.out.print("\nInverse inv.get{"+i+")");
-            printVector(inv.get(i));
+            //System.out.print("\nInverse inv.get{"+i+")");
+            //printVector(inv.get(i));
+            List<Double> vectorList = inv.get(i).getArrayList();
+            for (int j = 0; j < vectorList.size(); j++) {
+                System.out.print(vectorList.get(j) + ", ");
+            }
+            System.out.println();
         }
         
         Matrix inverse = new Matrix(inv, inv.get(0).getDimension());
