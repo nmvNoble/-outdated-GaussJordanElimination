@@ -211,5 +211,20 @@ public class Matrix {
         return inverse;
     }
     
+    public Matrix transpose(){
+        List<Vector> transpose = new ArrayList<>();
+        
+        for(int i=0;i<dimension;i++){
+            double[] tmp = new double[dimension];
+            for (int j = 0; j < dimension; j++) {
+                //tmp[j] = vectors.get(j).arrayList.get(i);
+                tmp[j] = this.arrayList.get(j).getArrayList().get(i);//vectors.get(j).arrayList.get(i);
+            }
+            Vector e = new Vector(tmp, dimension);
+                transpose.add(e);
+        }
+        Matrix T = new Matrix(transpose, dimension); 
+        return T;
+    }
 	
 }
