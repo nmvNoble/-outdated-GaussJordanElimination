@@ -204,7 +204,7 @@ public class Matrix {
             List<Double> vectorList = inv.get(i).getArrayList();
             System.out.print("Vector " + i + ": ");
             for (int j = 0; j < vectorList.size(); j++) {
-                System.out.print(vectorList.get(j) + ", ");
+                System.out.print(vectorList.get(j) + " ");
             }
             System.out.println();
         }
