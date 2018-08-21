@@ -34,9 +34,11 @@ public class Matrix {
 	
     public static double[][] ListTo2DArray(List<Vector> vectors, int dimension){
         double[][] matrix = new double [dimension][dimension];
-        for(int i = 0; i < dimension - 1; i++)
-            for(int j = 0; j < dimension; j++)
+        for(int i = 0; i < dimension; i++){
+            for(int j = 0; j < dimension; j++){
                 matrix[i][j] = vectors.get(j).getArrayList().get(i);
+            }
+        }
                
         return matrix;
     }
@@ -44,29 +46,52 @@ public class Matrix {
     public void times(Matrix B)
     {
         Matrix A = this;
-        List<Vector> tempList = new ArrayList<Vector>();
-        for (int a = 0; a < dimension; a++) {
-            double[] temp = new double[dimension];
-            for (int b = 0; b < dimension; b++) {
-                    temp[b]=0;
-            }
-            Vector v = new Vector(temp, dimension);
-            tempList.add(v);
+
+        double a[][] = new double[A.dimension][A.dimension];
+        a = ListTo2DArray(A.arrayList, A.dimension);
+        double b[][] = new double[B.dimension][B.dimension];
+        b = ListTo2DArray(B.arrayList,B.dimension);
+
+        int aColSize = a[0].length; //matrix A columns length
+        int bRowSize = b.length; //matrix B row length
+
+        if(aColSize != bRowSize)
+        {
+            System.out.println("Incompatible matrix size.");
         }
+
+        int matrixRowSize = a.length; //final matrix row length
+        int matrixColSize = b[0].length; //final matrix column length
+
+        double[][] matrixResult = new double[matrixRowSize][matrixColSize];
         
-        Matrix C = new Matrix(tempList, dimension);
-
-        for(int i = 0; i < this.dimension; i++){
-            for (int j = 0; j < this.dimension; j++) {
-                double summation = 0;
-                for(int s = 0; s < dimension; s++){
-                    //summation += A.arrayList.get(j).getArrayList().get(i).scale(B.arrayList.get(j).getArrayList().get(j));
-                }
-                C.arrayList.get(j).getArrayList().set(i, summation);
-
+        for(int i = 0; i < matrixRowSize; i++)
+        {
+            for(int j = 0; j < matrixColSize; j++)
+            {
+                matrixResult[i][j]= 0.0000;
             }
         }
 
+        for(int i = 0; i < matrixRowSize; i++)
+        {
+            for(int j = 0; j < matrixColSize; j++)
+            {
+                for(int k = 0; k < aColSize; k++)
+                {
+                    matrixResult[i][j] += a[i][k] * b[k][j];
+                }
+            }
+        }
+        System.out.println("Matrix Multiplication Result: ");
+        for(int i = 0; i < matrixRowSize; i++)
+        {
+            for(int j = 0; j < matrixColSize; j++)
+            {
+                System.out.print(matrixResult[i][j]+ " ");
+            }
+            System.out.println();
+        }
     }
 
     public double det ( ) {

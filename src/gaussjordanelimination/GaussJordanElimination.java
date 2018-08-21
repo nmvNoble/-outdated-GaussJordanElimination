@@ -107,7 +107,7 @@ public class GaussJordanElimination {
         Matrix m1 = new Matrix(vecM1, 2);
         //Matrix m2 = new Matrix(0);
         Matrix m2 = new Matrix(vecM2, 2);
-        //m1.times(m2);
+        m1.times(m2);
         
         
         Vector vm8 = new Vector(new double[]{0, 2}, 2);
