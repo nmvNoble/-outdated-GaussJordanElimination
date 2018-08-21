@@ -97,7 +97,12 @@ public class Matrix {
     public double det ( ) {
         List<Vector> vectors = this.arrayList;
         int dimension = vectors.get(0).getDimension();
-        
+        for(int q = 0; q<vectors.size();q++){
+            if(vectors.get(q).getArrayList().size() != dimension){
+                System.out.print("\nDeterminant does not exist (will return det as 0)");
+                return 0;
+            }
+        }
         if(dimension == 2){
             return vectors.get(0).getArrayList().get(0) * vectors.get(1).getArrayList().get(1)
                     - vectors.get(0).getArrayList().get(1)*vectors.get(1).getArrayList().get(0);
@@ -174,7 +179,12 @@ public class Matrix {
     public Matrix inverse() {
         List<Vector> vectors = this.arrayList;
         int dimension = vectors.get(0).getDimension();
-        
+        for(int q = 0; q<vectors.size();q++){
+            if(vectors.get(q).getArrayList().size() != dimension){
+                System.out.print("\nInverse does not exist");
+                return null;
+            }
+        }
         List<Vector> GJ = new ArrayList<Vector>();
         List<Vector> inv = new ArrayList<Vector>();
         //GJ = vectors;
